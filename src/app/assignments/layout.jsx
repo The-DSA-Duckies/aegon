@@ -1,11 +1,9 @@
-import MuiDrawer from "@mui/material/Drawer"
-
+import Sidebar from "../ui/sidebar";
 
 export default function Layout({ children }) {
   return (
     <div>
-        <h1>Layout for assignments</h1>
-        <div>{children}</div>
+        <Sidebar>{children}</Sidebar>
     </div>
   );
 }
