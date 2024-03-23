@@ -25,11 +25,14 @@ export default function ButtonAppBar() {
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: '10em'}}>
-            <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap' }} onClick={() => handleNavigate('/assignments')}>
-              Assignments
+            <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap' }} onClick={() => handleNavigate('/')}>
+              Home
             </Button>
             <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap', marginLeft: '1em' }} onClick={() => handleNavigate('/about-us')}>
               About Us
+            </Button>
+            <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap', marginLeft: '1em' }} onClick={() => handleNavigate('/assignments')}>
+              Assignments
             </Button>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
