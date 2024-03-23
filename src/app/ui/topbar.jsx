@@ -25,21 +25,21 @@ export default function ButtonAppBar() {
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: '10em'}}>
-            <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap' }} onClick={() => handleNavigate('/')}>
+            <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap', fontWeight: 'bold' }} onClick={() => handleNavigate('/')}>
               Home
             </Button>
-            <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap', marginLeft: '1em' }} onClick={() => handleNavigate('/about-us')}>
+            <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap', marginLeft: '5em', fontWeight: 'bold' }} onClick={() => handleNavigate('/about-us')}>
               About Us
             </Button>
-            <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap', marginLeft: '1em' }} onClick={() => handleNavigate('/assignments')}>
+            <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap', marginLeft: '5em', fontWeight: 'bold' }} onClick={() => handleNavigate('/assignments')}>
               Assignments
             </Button>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
-            <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap' }} onClick={() => handleNavigate('/login')}>
+            <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap', fontWeight: 'bold' }} onClick={() => handleNavigate('/login')}>
               Login
             </Button>
-            <Button sx={{ color: 'white', backgroundColor: '#1c65ee', whiteSpace: 'nowrap', marginLeft: '1em', '&:hover': { backgroundColor: '#1c65ee',} }} onClick={() => handleNavigate('/login/signup')}>
+            <Button sx={{ color: 'white', backgroundColor: '#1c65ee', whiteSpace: 'nowrap', marginLeft: '5em', fontWeight: 'bold', '&:hover': { backgroundColor: '#1c65ee',} }} onClick={() => handleNavigate('/login/signup')}>
               Sign Up
             </Button>
           </Box>
