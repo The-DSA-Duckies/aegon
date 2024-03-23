@@ -2,6 +2,9 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
+import MultipleSelect from "../../ui/studentSelector";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 export default function Page() {
   return (
@@ -19,7 +22,7 @@ export default function Page() {
           // justifyContent: "center",
           height: "100%",
           width: "70%",
-          backgroundColor: "green",
+          // backgroundColor: "green",
         }}
       >
         <Box
@@ -161,12 +164,45 @@ export default function Page() {
       </Box>
       <Box
         sx={{
+          display: "flex",
+          flexDirection: "column",
           height: "100%",
           width: "30%",
-          backgroundColor: "blue",
+          // backgroundColor: "blue",
         }}
       >
-        Hello again
+        <Box
+          sx={{
+            display: "flex",
+            height: "18%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <MultipleSelect />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            height: "60%",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            paddingTop: "50px",
+            alignItems: "flex-start",
+            paddingLeft: "70px",
+            gap: "50px",
+          }}
+        >
+          <TextField label="Grade" variant="outlined" sx={{ width: "300px" }} />
+          <TextField
+            label="Comments"
+            multiline
+            rows={8}
+            defaultValue=""
+            sx={{ width: "300px" }}
+          />
+          <Button variant="contained">Submit</Button>
+        </Box>
       </Box>
     </Box>
   );
