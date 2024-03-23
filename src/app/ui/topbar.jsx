@@ -16,19 +16,19 @@ export default function ButtonAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: 'white' }}>
+      <AppBar position="static" sx={{ backgroundColor: 'white'}}>
         <Toolbar sx={{ display: 'flex' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start'}}>
-            <img src="/images/logo.png" alt="Logo" style={{ width: '10%', height: '10%', marginRight: '1em', marginLeft: '-1em' }} />
-            <Typography variant="h6" component="div" sx={{ color: 'black', whiteSpace: 'nowrap' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', width: 'min-content'}}>
+            <img src="/images/logo.png" alt="Logo" style={{ width: '50%', height: '50%', marginRight: '1em', marginLeft: '-1em' }} />
+            <Typography variant="h5" component="div" sx={{ color: 'black', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
               Guppie Grader
             </Typography>
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start'}}>
+          <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: '10em'}}>
             <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap' }} onClick={() => handleNavigate('/assignments')}>
               Assignments
             </Button>
-            <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap', marginLeft: '1em' }} onClick={() => handleNavigate('/about')}>
+            <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap', marginLeft: '1em' }} onClick={() => handleNavigate('/about-us')}>
               About Us
             </Button>
           </Box>
@@ -36,7 +36,7 @@ export default function ButtonAppBar() {
             <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap' }} onClick={() => handleNavigate('/login')}>
               Login
             </Button>
-            <Button sx={{ color: '#1c65ee', whiteSpace: 'nowrap', marginLeft: '1em' }} onClick={() => handleNavigate('/signup')}>
+            <Button sx={{ color: 'white', backgroundColor: '#1c65ee', whiteSpace: 'nowrap', marginLeft: '1em', '&:hover': { backgroundColor: '#1c65ee',} }} onClick={() => handleNavigate('/login/signup')}>
               Sign Up
             </Button>
           </Box>
