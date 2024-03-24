@@ -36,7 +36,7 @@ export default function DoLogin() {
         Password<span style={{ color: 'red' }}>*</span>
       </Typography>
       <TextField id="outlined-required" value={passValue} onChange={handlePassChange} fullWidth required/>
-      <Button type="submit" sx={{fontSize: '2rem', padding: '0.5em 1em', margin: '1em', color: 'white', backgroundColor: '#1c65ee', whiteSpace: 'nowrap', fontWeight: 'bold', '&:hover': { backgroundColor: '#1c65ee'} }}>
+      <Button type="submit" sx={{fontSize: '2rem', padding: '0.5em 1em', marginTop: '1em', color: 'white', backgroundColor: '#1c65ee', whiteSpace: 'nowrap', fontWeight: 'bold', '&:hover': { backgroundColor: '#1c65ee'} }}>
         Login
       </Button>
     </form>

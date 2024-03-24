@@ -14,7 +14,7 @@ export default function Page() {
                     <Image src="/images/LoginDucks.png" alt="Landing page image" width={500} height={700}/>
                 </Box>
                 <Box sx={{ width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                    <Typography variant="h2" sx={{marginRight: '8em', color: '#1d63d4' }}>
+                    <Typography variant="h2" sx={{marginRight: '7.5em', color: '#1d63d4' }}>
                         Login
                     </Typography>
                     <Typography variant="h6" sx={{color: 'grey', marginRight: '15em'}}>
