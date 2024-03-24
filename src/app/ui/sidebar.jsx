@@ -21,6 +21,7 @@ import {
   ListItemText,
   Stack,
 } from "@mui/material";
+import { useRouter } from 'next/navigation';
 
 const drawerWidth = 240;
 
@@ -79,6 +80,12 @@ export default function Sidebar(props) {
     setOpen(!open);
   };
 
+  const router = useRouter(); // added based on topbar code for button click navigation
+
+  const handleNavigate = (path) => {
+    router.push(path);
+  };
+
   return (
     <Box
       sx={{
@@ -90,7 +97,7 @@ export default function Sidebar(props) {
         {open ? (
           <DrawerHeader>
             <Stack direction="row" spacing={1} alignItems="center">
-              <IconButton>
+              <IconButton onClick={() => handleNavigate('/')}>
                 <img
                   src="/guppy_grader.png"
                   alt="Logo"
@@ -107,7 +114,7 @@ export default function Sidebar(props) {
         ) : (
           <DrawerHeader sx={{ padding: 0 }}>
             <Stack direction="column" alignItems="center">
-              <IconButton>
+              <IconButton onClick={() => handleNavigate('/')}>
                 <img
                   src="/guppy_grader.png"
                   alt="Logo"
@@ -234,7 +241,7 @@ export default function Sidebar(props) {
           </ListItem>
           {/*About us*/}
           <ListItem key={"About us"} disablePadding sx={{ display: "block" }}>
-            <ListItemButton
+            <ListItemButton onClick={() => handleNavigate('/about-us')}
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
