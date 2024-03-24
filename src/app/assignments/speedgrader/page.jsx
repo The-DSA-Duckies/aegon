@@ -1,3 +1,5 @@
+"use client";
+import * as React from "react";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
@@ -5,8 +7,44 @@ import Pagination from "@mui/material/Pagination";
 import MultipleSelect from "../../ui/studentSelector";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
+const nameID = {
+  "Oliver Hansen": 204884010,
+  "Van Henry": 206666694,
+  "April Tucker": 207287544,
+  "Ralph Hubbard": 208447816,
+};
 
 export default function Page() {
+  const [personName, setPersonName] = React.useState("");
+  const [personID, setPersonID] = React.useState("");
+  const [grade, setGrade] = React.useState("");
+  const [feedback, setFeedback] = React.useState("");
+  const [code, setCode] = React.useState("");
+  const [report, setReport] = React.useState("");
+  const [page, setPage] = React.useState(1);
+
+  const handlePageChange = async (event, value) => {
+    setPage(value);
+  };
+
+  const handleGradeChange = async (event) => {
+    const response = await fetch("http://localhost:4000/");
+    setGrade(event.target.value);
+    const data = await response.json();
+  };
+
+  const renderPage = () => {
+    if (page === 1) {
+      return <Typography>{feedback}</Typography>;
+    } else if (page === 2) {
+      return <Typography>{code}</Typography>;
+    } else {
+      return <Typography>{report}</Typography>;
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -108,54 +146,12 @@ export default function Page() {
             }}
             style={{ maxHeight: 480, overflow: "auto" }}
           >
-            <Box>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </Box>
-            <Box>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </Box>
-            <Box>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </Box>
-            <Box>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </Box>
-            <Box>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </Box>
+            {renderPage()}
           </Paper>
           <Pagination
-            count={10}
+            count={3}
+            page={page}
+            onChange={handlePageChange}
             sx={{
               paddingTop: "20px",
             }}
@@ -179,7 +175,16 @@ export default function Page() {
             alignItems: "center",
           }}
         >
-          <MultipleSelect />
+          <MultipleSelect
+            personName={personName}
+            setPersonName={setPersonName}
+            personID={personID}
+            setPersonID={setPersonID}
+            nameID={nameID}
+            setFeedback={setFeedback}
+            setCode={setCode}
+            setReport={setReport}
+          />
         </Box>
         <Box
           sx={{
@@ -193,7 +198,12 @@ export default function Page() {
             gap: "50px",
           }}
         >
-          <TextField label="Grade" variant="outlined" sx={{ width: "300px" }} />
+          <TextField
+            onChange={handleGradeChange}
+            label="Grade"
+            variant="outlined"
+            sx={{ width: "300px" }}
+          />
           <TextField
             label="Comments"
             multiline

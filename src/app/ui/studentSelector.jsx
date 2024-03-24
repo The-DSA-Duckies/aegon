@@ -18,18 +18,7 @@ const MenuProps = {
   },
 };
 
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
-];
+const names = ["Oliver Hansen", "Van Henry", "April Tucker", "Ralph Hubbard"];
 
 function getStyles(name, personName, theme) {
   return {
@@ -40,18 +29,19 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function MultipleSelect() {
+export default function MultipleSelect(props) {
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
 
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+  const handleChange = async (event) => {
+    props.setPersonName(event.target.value);
+    props.setPersonID(props.nameID[props.personName]);
+    const uri =
+      "http://localhost:4000/submissions?student_id=" + props.personID;
+    const response = await fetch(uri);
+    const data = await response.json();
+    props.setFeedback(data[0]["feedback"]);
+    props.setReport(data[0]["report"]);
+    props.setCode(data[0]["code"]);
   };
 
   return (
@@ -61,7 +51,7 @@ export default function MultipleSelect() {
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
-          value={personName}
+          value={props.personName}
           onChange={handleChange}
           input={<OutlinedInput label="Name" />}
           MenuProps={MenuProps}
@@ -70,7 +60,7 @@ export default function MultipleSelect() {
             <MenuItem
               key={name}
               value={name}
-              style={getStyles(name, personName, theme)}
+              style={getStyles(name, props.personName, theme)}
             >
               {name}
             </MenuItem>
