@@ -7,7 +7,7 @@ import { TopBarLayout } from "./layout";
 export default function Home() {
   return (
     <TopBarLayout>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh - 64px' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Box sx={{ width: '50%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <Typography variant="h1" sx={{paddingTop: '1.5em', fontWeight: 'bold' }}>
             Grading Made<br/>

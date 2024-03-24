@@ -7,6 +7,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useRouter } from 'next/navigation';
 
+/* current topbar height is 100px */
+
 export default function ButtonAppBar() {
   const router = useRouter();
 
@@ -16,7 +18,7 @@ export default function ButtonAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: 'white'}}>
+      <AppBar position="sticky" sx={{ backgroundColor: 'white'}}>
         <Toolbar sx={{ display: 'flex' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', width: 'min-content'}}>
             <img src="/images/logo.png" alt="Logo" style={{ width: '50%', height: '50%', marginRight: '1em', marginLeft: '-1em' }} />
