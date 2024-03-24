@@ -21,7 +21,7 @@ export default function ButtonAppBar() {
       <AppBar position="sticky" sx={{ backgroundColor: 'white'}}>
         <Toolbar sx={{ display: 'flex' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', width: 'min-content'}}>
-            <img src="/images/logo.png" alt="Logo" style={{ width: '50%', height: '50%', marginRight: '1em', marginLeft: '-1em' }} />
+            <img src="/guppy_grader.png" alt="Logo" style={{ width: '50%', height: '50%', marginRight: '1em', marginLeft: '-1em' }} />
             <Typography variant="h5" component="div" sx={{ color: 'black', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
               Guppie Grader
             </Typography>
