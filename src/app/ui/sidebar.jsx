@@ -109,7 +109,7 @@ export default function Sidebar(props) {
             <Stack direction="column" alignItems="center">
               <IconButton>
                 <img
-                  src="/guppy_logo.png"
+                  src="/guppy_grader.png"
                   alt="Logo"
                   width="48px"
                   height="48px"
