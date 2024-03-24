@@ -13,10 +13,6 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {
   Divider,
@@ -297,68 +293,3 @@ export default function Sidebar(props) {
     </Box>
   );
 }
-
-/**      <Drawer variant="permanent" open={open} sx={{ justifyContent: "center" }}>
-        <DrawerHeader>
-          <div height="70px">
-            <img src="./guppy_logo.png" alt="Logo" height="100%" width="100%" />
-          </div>
-          {open && <h3>Guppy Grader</h3>}
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-          >
-            {open ? <MenuOpenIcon /> : <MenuIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <divider />
-        <List>
-          <ListItem>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon>
-                <AssignmentIcon />
-              </ListItemIcon>
-              {open && <h4>Assignments</h4>}
-            </ListItemButton>
-          </ListItem>
-        </List>
-        <Box sx={{ flexGrow: 1 }} />
-        <List>
-          <ListItem>
-            {!open && (
-              <ListItemButton>
-                <ListItemIcon sx={{ color: "blue" }}>
-                  <AddCircleRoundedIcon />
-                </ListItemIcon>
-              </ListItemButton>
-            )}
-            {open && (
-              <ListItemButton
-                sx={{
-                  height: "40rm",
-                  backgroundColor: "blue",
-                  borderRadius: "20%",
-                }}
-              >
-                <h4>Create Assignment</h4>
-              </ListItemButton>
-            )}
-          </ListItem>
-          <ListItem>
-            <ListItemButton>
-              <ListItemIcon>
-                <InfoOutlinedIcon />
-              </ListItemIcon>
-              {open && <h4>About us</h4>}
-            </ListItemButton>
-          </ListItem>
-        </List>
-        <Divider />
-      </Drawer> */
