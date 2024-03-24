@@ -84,7 +84,6 @@ export default function Sidebar(props) {
     <Box
       sx={{
         display: "flex",
-        flexDirection: "column",
       }}
     >
       <CssBaseline />
