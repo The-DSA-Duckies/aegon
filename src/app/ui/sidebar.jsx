@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-import logo from "../../../public/guppy_logo.png";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -93,7 +92,7 @@ export default function Sidebar(props) {
             <Stack direction="row" spacing={1} alignItems="center">
               <IconButton>
                 <img
-                  src="/guppy_logo.png"
+                  src="/guppy_grader.png"
                   alt="Logo"
                   width="48px"
                   height="48px"
