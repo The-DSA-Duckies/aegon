@@ -33,10 +33,11 @@ export default function MultipleSelect(props) {
   const theme = useTheme();
 
   const handleChange = async (event) => {
-    props.setPersonName(event.target.value);
+    name = event.target.value;
+    props.setPersonName(name);
     props.setPersonID(props.nameID[props.personName]);
     const uri =
-      "http://localhost:4000/submissions?student_id=" + props.personID;
+      "http://localhost:4000/submissions?student_id=" + props.nameID[name];
     const response = await fetch(uri);
     const data = await response.json();
     props.setFeedback(data[0]["feedback"]);
