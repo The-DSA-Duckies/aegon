@@ -15,7 +15,7 @@ export default function Page() {
         <Typography variant="h4" sx={{marginLeft: '1em', marginBottom: '10em' }}>
           Actually upload here soon!
         </Typography>
-        <Image src="/waves.png" alt="Landing page image" width={700} height={275}/>
+        <Image src="/waves.png" alt="Waves at bottom of left half" width={700} height={250}/>
       </Box>
       <Box sx={{ width: '40%', display: 'flex', flexDirection: 'column', alignItems: 'left', justifyContent: 'center' }}>
         <CreateAssignment/>
