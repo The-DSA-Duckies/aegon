@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 import { useRouter } from 'next/navigation';
 
-const drawerWidth = 240;
+const drawerWidth = 240; // // sidebar width when closed is 65px
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -216,7 +216,7 @@ export default function Sidebar(props) {
             disablePadding
             sx={{ display: "block" }}
           >
-            <ListItemButton
+            <ListItemButton onClick={() => handleNavigate('/assignments/create')}
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",

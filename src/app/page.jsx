@@ -21,7 +21,7 @@ export default function Home() {
           </Typography>
         </Box>
         <Box sx={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', paddingTop: '5em' }}>
-          <Image src="/LandingDucks.png" alt="Landing page image" width={500} height={200}/>
+          <Image src="/landing_ducks.png" alt="Landing page image" width={500} height={200}/>
         </Box>
       </Box>
     </TopBarLayout>
