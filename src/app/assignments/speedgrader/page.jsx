@@ -93,16 +93,6 @@ export default function Page() {
               Project 2
             </Typography>
           </Box>
-          <Box>
-          <Typography
-              variant="h4"
-              sx={{
-                
-              }}
-            >
-              {personName}
-            </Typography>
-          </Box>
         </Box>
         <Box
           sx={{
