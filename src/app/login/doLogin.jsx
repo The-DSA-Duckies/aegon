@@ -43,19 +43,61 @@ export default function DoLogin() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Typography variant="h4" sx={{paddingTop: '1em', fontWeight: 'bold', marginRight: '12em' }}>
+      <Typography 
+        variant="h4"
+        sx={{
+          paddingTop: '1em',
+          fontWeight: 'bold',
+          marginRight: '12em'
+        }}
+      >
         Username<span style={{ color: 'red' }}>*</span>
       </Typography>
-      <TextField id="outlined-required" value={userValue} onChange={handleUserChange} fullWidth required/>
-      <Typography variant="h4" sx={{paddingTop: '1em', fontWeight: 'bold', marginRight: '12em' }}>
+      <TextField 
+        id="outlined-required"
+        value={userValue}
+        onChange={handleUserChange}
+        fullWidth
+        required
+      />
+      <Typography
+        variant="h4"
+        sx={{
+          paddingTop: '1em',
+          fontWeight: 'bold',
+          marginRight: '12em'
+        }}
+      >
         Password<span style={{ color: 'red' }}>*</span>
       </Typography>
-      <TextField id="outlined-required" value={passValue} onChange={handlePassChange} fullWidth required/>
-      <Button type="submit" sx={{fontSize: '2rem', padding: '0.5em 1em', marginTop: '1em', color: 'white', backgroundColor: '#1c65ee', whiteSpace: 'nowrap', fontWeight: 'bold', '&:hover': { backgroundColor: '#1c65ee'} }}>
+      <TextField 
+        id="outlined-required"
+        value={passValue}
+        onChange={handlePassChange}
+        fullWidth
+        required
+      />
+      <Button
+        type="submit"
+        sx={{
+          fontSize: '2rem',
+          padding: '0.5em 1em',
+          marginTop: '1em',
+          color: 'white',
+          backgroundColor: '#1c65ee',
+          whiteSpace: 'nowrap',
+          fontWeight: 'bold',
+          '&:hover': { backgroundColor: '#1c65ee'}
+        }}
+      >
         Login
       </Button>
       {errorMessage && (
-        <Typography variant="body1" color="red" sx={{ paddingTop: '1em' }}>
+        <Typography 
+          variant="body1"
+          color="red"
+          sx={{ paddingTop: '1em' }}
+        >
           {errorMessage}
         </Typography>
       )}
