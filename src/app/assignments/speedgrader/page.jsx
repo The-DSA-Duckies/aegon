@@ -1,13 +1,13 @@
 "use client";
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
-import Pagination from "@mui/material/Pagination";
-import MultipleSelect from "../../ui/studentSelector";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
+import MultipleSelect from "../../ui/studentSelector";
 
 const nameID = {
   "Oliver Hansen": 204884010,
@@ -20,10 +20,10 @@ export default function Page() {
   const [personName, setPersonName] = React.useState("");
   const [personID, setPersonID] = React.useState("");
   const [grade, setGrade] = React.useState("");
-  const [feedback, setFeedback] = React.useState("");
+  const [feedback, setFeedback] = React.useState("Comments");
   const [code, setCode] = React.useState("");
   const [report, setReport] = React.useState("");
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = React.useState(0);
 
   const handlePageChange = async (event, value) => {
     setPage(value);
@@ -36,11 +36,21 @@ export default function Page() {
   };
 
   const renderPage = () => {
-    if (page === 1) {
-      return <Typography>{feedback}</Typography>;
-    } else if (page === 2) {
+    if (page === 0) {
+      if (code === "") {
+        return <Typography variant="h5">
+          To get started, select a student from the Name dropdown.
+        </Typography>;
+      }
+
       return <Typography>{code}</Typography>;
-    } else {
+    } else if (page === 1) {
+      if (report === "") {
+        return <Typography variant="h5">
+          To get started, select a student from the Name dropdown.
+        </Typography>;
+      }
+
       return <Typography>{report}</Typography>;
     }
   };
@@ -50,17 +60,16 @@ export default function Page() {
       sx={{
         display: "flex",
         height: "100vh",
-        width: "100vw",
+        width: 'calc(100vw - 65px)'
       }}
     >
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          // justifyContent: "center",
+          justifyContent: "center",
           height: "100%",
           width: "70%",
-          // backgroundColor: "green",
         }}
       >
         <Box
@@ -73,61 +82,26 @@ export default function Page() {
             height: "14%",
           }}
         >
-          <Box>Assignment Name</Box>
-          <Box
-            sx={
-              {
-                // paddingBottom: "20px",
-              }
-            }
-          >
-            Student Name
+          <Box>
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: 'bold',
+                color: '#1c65ee'
+              }}
+            >
+              Project 2
+            </Typography>
           </Box>
-          {/* <Divider flexItem sx={{ alignSelf: "flex-end" }} /> */}
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            height: "8%",
-            gap: "50px",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Box>12</Box>
-            <Box>Comments</Box>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Box>95%</Box>
-            <Box>Grade</Box>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Box>9.5</Box>
-            <Box>Points</Box>
+          <Box>
+          <Typography
+              variant="h4"
+              sx={{
+                
+              }}
+            >
+              {personName}
+            </Typography>
           </Box>
         </Box>
         <Box
@@ -136,26 +110,41 @@ export default function Page() {
             flexDirection: "column",
             justifyContent: "flex-start",
             alignItems: "center",
-            height: "78%",
+            height: "80%",
             width: "100%",
           }}
         >
           <Paper
             sx={{
-              width: "80%",
+              width: "90%",
+              alignContent: "center",
             }}
-            style={{ maxHeight: 480, overflow: "auto" }}
+            style={{ minHeight: '90%', maxHeight: '90%', overflow: "auto" }}
           >
             {renderPage()}
           </Paper>
-          <Pagination
-            count={3}
-            page={page}
+          <Tabs
+            value={page}
             onChange={handlePageChange}
+            variant="outlined"
             sx={{
               paddingTop: "20px",
+              width: "50%"
             }}
-          />
+          >
+            <Tab
+              label="Code"
+              sx={{
+                flexGrow: 1
+              }}
+            />
+            <Tab
+              label="Report"
+              sx={{
+                flexGrow: 1
+              }}
+            />
+          </Tabs>
         </Box>
       </Box>
       <Box
@@ -163,16 +152,19 @@ export default function Page() {
           display: "flex",
           flexDirection: "column",
           height: "100%",
-          width: "30%",
-          // backgroundColor: "blue",
+          width: "28%",
         }}
       >
         <Box
           sx={{
             display: "flex",
-            height: "18%",
-            justifyContent: "center",
-            alignItems: "center",
+            height: "60%",
+            width: "100%",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            paddingTop: "2em",
+            alignItems: "flex-start",
+            gap: "30px",
           }}
         >
           <MultipleSelect
@@ -185,33 +177,33 @@ export default function Page() {
             setCode={setCode}
             setReport={setReport}
           />
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            height: "60%",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            paddingTop: "50px",
-            alignItems: "flex-start",
-            paddingLeft: "70px",
-            gap: "50px",
-          }}
-        >
           <TextField
             onChange={handleGradeChange}
             label="Grade"
             variant="outlined"
-            sx={{ width: "300px" }}
+            sx={{ width: "100px" }}
           />
           <TextField
+            variant="outlined"
             label="Comments"
             multiline
-            rows={8}
-            defaultValue=""
-            sx={{ width: "300px" }}
+            rows={20}
+            value={feedback}
+            fullWidth
           />
-          <Button variant="contained">Submit</Button>
+          <Button
+            sx={{
+              fontSize: '1.5rem',
+              padding: '0.25em 0.5em',
+              color: 'white',
+              backgroundColor: '#1c65ee',
+              whiteSpace: 'nowrap',
+              fontWeight: 'bold',
+              '&:hover': { backgroundColor: '#1c65ee'}
+            }}
+          >
+            Update Submission
+          </Button>
         </Box>
       </Box>
     </Box>
