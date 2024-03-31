@@ -29,7 +29,7 @@ export default function Page() {
   const [code, setCode] = React.useState("");
   const [report, setReport] = React.useState("");
   const [page, setPage] = React.useState(0);
-  const [selectedOption, setSelectedOption] = React.useState('');
+  const [selectedCodeFile, setSelectedCodeFile] = React.useState("");
   let codeFileContents = [""];
   let codeFileNames = [""];
 
@@ -47,8 +47,8 @@ export default function Page() {
     setEditedFeedback(event.target.value);
   };
 
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
+  const handleCodeFileChange = (event) => {
+    setSelectedCodeFile(event.target.value);
   };
 
   const parseCode = () => {
@@ -70,6 +70,12 @@ export default function Page() {
     return true;
   };
 
+  const getCodeFile = () => {
+    const codeFileIndex = codeFileNames.indexOf(selectedCodeFile);
+    console.log('Code file index: ', codeFileIndex);
+    return codeFileContents[codeFileIndex];
+  };
+
   const renderPage = () => {
     if (page === 0) {
       if (code === "") {
@@ -87,6 +93,7 @@ export default function Page() {
       }
 
       parseCode();
+      const codeFileContent = getCodeFile();
       return (
         <SyntaxHighlighter 
           language="cpp"
@@ -94,7 +101,7 @@ export default function Page() {
           showLineNumbers
           wrapLongLines
         >
-          {code}
+          {codeFileContent}
         </SyntaxHighlighter>
       );
     } else if (page === 1) {
@@ -177,8 +184,8 @@ export default function Page() {
         >
           {page === 0 && code != "" && parseCode() && (
             <Select
-              value={selectedOption}
-              onChange={handleOptionChange}
+              value={selectedCodeFile}
+              onChange={handleCodeFileChange}
               variant="outlined"
               displayEmpty
               style={{ }}
