@@ -27,6 +27,8 @@ export default function Page() {
   const [code, setCode] = React.useState("");
   const [report, setReport] = React.useState("");
   const [page, setPage] = React.useState(0);
+  let codeFileContents = [""];
+  let codeFileNames = [""];
 
   const handlePageChange = async (event, value) => {
     setPage(value);
@@ -42,6 +44,25 @@ export default function Page() {
     setEditedFeedback(event.target.value);
   };
 
+  const parseCode = () => {
+    codeFileContents = [""];
+    codeFileNames = [""];
+
+    codeFileContents = code.split("CUR FILE == ");
+    codeFileContents.shift();
+
+    for (let i = 0; i < codeFileContents.length; i++) {
+      const indexOfNewline = codeFileContents[i].indexOf("\n");
+      codeFileNames.push(codeFileContents[i].substring(0, indexOfNewline));
+      codeFileContents[i] = codeFileContents[i].substring(indexOfNewline + 1);
+    }
+    codeFileNames.shift();
+
+    console.log('Code File Contents: ', codeFileContents);
+    console.log('Code File Names: ', codeFileNames);
+    return code;
+  };
+
   const renderPage = () => {
     if (page === 0) {
       if (code === "") {
@@ -50,6 +71,7 @@ export default function Page() {
         </Typography>;
       }
 
+      parseCode();
       return <SyntaxHighlighter 
         language="cpp"
         style={oneLight}
