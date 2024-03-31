@@ -23,7 +23,8 @@ const nameID = {
 export default function Page() {
   const [personName, setPersonName] = React.useState("");
   const [personID, setPersonID] = React.useState("");
-  const [grade, setGrade] = React.useState("");
+  const [points, setPoints] = React.useState("");
+  const [maxPoints, setMaxPoints] = React.useState(30);
   const [feedback, setFeedback] = React.useState("Comments");
   const [editedFeedback, setEditedFeedback] = React.useState("");
   const [code, setCode] = React.useState("");
@@ -37,10 +38,13 @@ export default function Page() {
     setPage(value);
   };
 
-  const handleGradeChange = async (event) => {
-    const response = await fetch("http://localhost:4000/");
-    setGrade(event.target.value);
-    const data = await response.json();
+  const handlePointsChange = async (event) => {
+    const regex = /^-?\d{0,2}\.?\d{0,2}$/;
+    if (regex.test(event.target.value)) {
+      if (event.target.value === "" || event.target.value === "-" || (parseFloat(event.target.value) <= 30.00 && parseFloat(event.target.value) >= -25.00)) {
+        setPoints(event.target.value);
+      }
+    }
   };
 
   const handleFeedbackChange = async (event) => {
@@ -242,7 +246,7 @@ export default function Page() {
             justifyContent: "flex-start",
             paddingTop: "2em",
             alignItems: "flex-start",
-            gap: "30px",
+            gap: "25px",
           }}
         >
           <MultipleSelect
@@ -256,11 +260,15 @@ export default function Page() {
             setCode={setCode}
             setSelectedCodeFile={setSelectedCodeFile}
             setReport={setReport}
+            setPoints={setPoints}
           />
           <TextField
-            onChange={handleGradeChange}
-            label="Grade"
+            value={points}
+            onChange={handlePointsChange}
+            label="Points"
             variant="outlined"
+            helperText={"out of "+ maxPoints}
+            FormHelperTextProps={{ sx: {fontSize: '1rem'} }}
             sx={{ width: "100px" }}
           />
           <TextField
