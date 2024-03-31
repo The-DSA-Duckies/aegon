@@ -254,6 +254,7 @@ export default function Page() {
             setFeedback={setFeedback}
             setEditedFeedback={setEditedFeedback}
             setCode={setCode}
+            setSelectedCodeFile={setSelectedCodeFile}
             setReport={setReport}
           />
           <TextField
