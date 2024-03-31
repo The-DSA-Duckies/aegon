@@ -17,6 +17,7 @@ export default function CreateAssignment() {
     // State to manage the value of the input field
   const [nameValue, setNameValue] = useState('');
   const [typeValue, setTypeValue] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
     // Function to handle changes in the input field
   const handleNameChange = (event) => {
@@ -33,8 +34,8 @@ export default function CreateAssignment() {
     console.log('Name value: ', nameValue);
     console.log('Type value: ', typeValue);
         
-    // temporary hard coding direct to speedgrader page if fields present
-    handleNavigate('/assignments/speedgrader');
+    // temporary disabling ability to create assignments
+    setErrorMessage('Cannot create an assignment currently, please try again soon.');
   };
 
   return (
@@ -97,6 +98,11 @@ export default function CreateAssignment() {
         >
             Create Assignment
         </Button>
+        {errorMessage && (
+            <Typography variant="body1" color="red" sx={{ paddingTop: '1em' }}>
+                {errorMessage}
+            </Typography>
+        )}
     </form>
   );
 }
