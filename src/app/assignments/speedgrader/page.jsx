@@ -21,6 +21,7 @@ export default function Page() {
   const [personID, setPersonID] = React.useState("");
   const [grade, setGrade] = React.useState("");
   const [feedback, setFeedback] = React.useState("Comments");
+  const [editedFeedback, setEditedFeedback] = React.useState("");
   const [code, setCode] = React.useState("");
   const [report, setReport] = React.useState("");
   const [page, setPage] = React.useState(0);
@@ -33,6 +34,10 @@ export default function Page() {
     const response = await fetch("http://localhost:4000/");
     setGrade(event.target.value);
     const data = await response.json();
+  };
+
+  const handleFeedbackChange = async (event) => {
+    setEditedFeedback(event.target.value);
   };
 
   const renderPage = () => {
@@ -164,6 +169,7 @@ export default function Page() {
             setPersonID={setPersonID}
             nameID={nameID}
             setFeedback={setFeedback}
+            setEditedFeedback={setEditedFeedback}
             setCode={setCode}
             setReport={setReport}
           />
@@ -178,7 +184,8 @@ export default function Page() {
             label="Comments"
             multiline
             rows={20}
-            value={feedback}
+            value={editedFeedback}
+            onChange={handleFeedbackChange}
             fullWidth
           />
           <Button

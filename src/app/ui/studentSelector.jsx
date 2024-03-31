@@ -30,6 +30,7 @@ export default function MultipleSelect(props) {
     const response = await fetch(uri);
     const data = await response.json();
     props.setFeedback(data[0]["feedback"]);
+    props.setEditedFeedback(data[0]["feedback"]);
     props.setReport(data[0]["report"]);
     props.setCode(data[0]["code"]);
   };
