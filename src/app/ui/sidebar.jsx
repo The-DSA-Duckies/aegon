@@ -137,6 +137,7 @@ export default function Sidebar(props) {
             sx={{ display: "block" }}
           >
             <ListItemButton
+              onClick={() => handleNavigate('/assignments')}
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
@@ -144,6 +145,7 @@ export default function Sidebar(props) {
               }}
             >
               <ListItemIcon
+                onClick={() => handleNavigate('/assignments')}
                 sx={{
                   minWidth: 0,
                   mr: open ? 3 : "auto",
@@ -159,10 +161,11 @@ export default function Sidebar(props) {
               />
             </ListItemButton>
           </ListItem>
-          {["Assignment 1", "Assignment 2", "Assignment 3", "Assignment 4"].map(
+          {["Project 2"].map(
             (text, index) => (
               <ListItem key={text} disablePadding sx={{ display: "block" }}>
                 <ListItemButton
+                  onClick={() => handleNavigate('/assignments/speedgrader')}
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",
