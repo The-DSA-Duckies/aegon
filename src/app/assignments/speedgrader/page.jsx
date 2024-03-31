@@ -84,7 +84,7 @@ export default function Page() {
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
-            height: "14%",
+            height: "15%",
           }}
         >
           <Box>
@@ -110,9 +110,9 @@ export default function Page() {
           }}
         >
           <Paper
+            elevation={3}
             sx={{
-              width: "90%",
-              alignContent: "center",
+              width: "90%"
             }}
             style={{ minHeight: '90%', maxHeight: '90%', overflow: "auto" }}
           >
