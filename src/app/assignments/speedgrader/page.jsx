@@ -43,20 +43,20 @@ export default function Page() {
   const renderPage = () => {
     if (page === 0) {
       if (code === "") {
-        return <Typography variant="h5">
+        return <Typography variant="h5" sx={{ marginTop: '10em', marginLeft: '0.5em'}}>
           To get started, select a student from the Name dropdown.
         </Typography>;
       }
 
-      return <Typography>{code}</Typography>;
+      return <Typography sx={{ marginLeft: '0.5em', marginRight: '0.5em', whiteSpace: 'pre-wrap'}}>{code}</Typography>;
     } else if (page === 1) {
       if (report === "") {
-        return <Typography variant="h5">
+        return <Typography variant="h5" sx={{ marginTop: '10em', marginLeft: '0.5em'}}>
           To get started, select a student from the Name dropdown.
         </Typography>;
       }
 
-      return <Typography>{report}</Typography>;
+      return <Typography sx={{ marginLeft: '0.5em', marginRight: '0.5em', whiteSpace: 'pre-wrap'}}>{report}</Typography>;
     }
   };
 
