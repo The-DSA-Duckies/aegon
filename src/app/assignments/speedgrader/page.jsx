@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import { Prism as SyntaxHighlighter} from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import MultipleSelect from "../../ui/studentSelector";
@@ -27,6 +29,7 @@ export default function Page() {
   const [code, setCode] = React.useState("");
   const [report, setReport] = React.useState("");
   const [page, setPage] = React.useState(0);
+  const [selectedOption, setSelectedOption] = React.useState('');
   let codeFileContents = [""];
   let codeFileNames = [""];
 
@@ -42,6 +45,10 @@ export default function Page() {
 
   const handleFeedbackChange = async (event) => {
     setEditedFeedback(event.target.value);
+  };
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
   };
 
   const parseCode = () => {
@@ -60,42 +67,62 @@ export default function Page() {
 
     console.log('Code File Contents: ', codeFileContents);
     console.log('Code File Names: ', codeFileNames);
-    return code;
+    return true;
   };
 
   const renderPage = () => {
     if (page === 0) {
       if (code === "") {
-        return <Typography variant="h5" sx={{ marginTop: '10em', marginLeft: '0.5em'}}>
-          To get started, select a student from the Name dropdown.
-        </Typography>;
+        return (
+          <Typography
+            variant="h5"
+            sx={{
+              marginTop: '10em',
+              marginLeft: '0.5em'
+            }}
+          >
+            To get started, select a student from the Name dropdown.
+          </Typography>
+        );
       }
 
       parseCode();
-      return <SyntaxHighlighter 
-        language="cpp"
-        style={oneLight}
-        showLineNumbers
-        wrapLongLines
-      >
+      return (
+        <SyntaxHighlighter 
+          language="cpp"
+          style={oneLight}
+          showLineNumbers
+          wrapLongLines
+        >
           {code}
-      </SyntaxHighlighter>;
+        </SyntaxHighlighter>
+      );
     } else if (page === 1) {
       if (report === "") {
-        return <Typography variant="h5" sx={{ marginTop: '10em', marginLeft: '0.5em'}}>
-          To get started, select a student from the Name dropdown.
-        </Typography>;
+        return (
+          <Typography
+            variant="h5"
+            sx={{
+              marginTop: '10em',
+              marginLeft: '0.5em'
+            }}
+          >
+            To get started, select a student from the Name dropdown.
+          </Typography>
+        );
       }
 
-      return <Typography
-        sx={{
-          marginLeft: '1em',
-          marginRight: '1em',
-          whiteSpace: 'pre-wrap'
-        }}
-      >
-        {report}
-      </Typography>;
+      return (
+        <Typography
+          sx={{
+            marginLeft: '1em',
+            marginRight: '1em',
+            whiteSpace: 'pre-wrap'
+          }}
+        >
+          {report}
+        </Typography>
+      );
     }
   };
 
@@ -148,6 +175,22 @@ export default function Page() {
             width: "100%",
           }}
         >
+          {page === 0 && code != "" && parseCode() && (
+            <Select
+              value={selectedOption}
+              onChange={handleOptionChange}
+              variant="outlined"
+              displayEmpty
+              style={{ }}
+            >
+              <MenuItem value="">Select a code file</MenuItem>
+              {codeFileNames.map((codeFile) => (
+                <MenuItem key={codeFile} value={codeFile}>
+                  {codeFile}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
           <Paper
             elevation={3}
             sx={{
