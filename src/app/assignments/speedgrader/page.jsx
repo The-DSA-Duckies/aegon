@@ -5,8 +5,10 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import { Prism as SyntaxHighlighter} from "react-syntax-highlighter";
+import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import MultipleSelect from "../../ui/studentSelector";
 
 const nameID = {
@@ -48,7 +50,14 @@ export default function Page() {
         </Typography>;
       }
 
-      return <Typography sx={{ marginLeft: '0.5em', marginRight: '0.5em', whiteSpace: 'pre-wrap'}}>{code}</Typography>;
+      return <SyntaxHighlighter 
+        language="cpp"
+        style={oneLight}
+        showLineNumbers
+        wrapLongLines
+      >
+          {code}
+      </SyntaxHighlighter>;
     } else if (page === 1) {
       if (report === "") {
         return <Typography variant="h5" sx={{ marginTop: '10em', marginLeft: '0.5em'}}>
@@ -56,7 +65,15 @@ export default function Page() {
         </Typography>;
       }
 
-      return <Typography sx={{ marginLeft: '0.5em', marginRight: '0.5em', whiteSpace: 'pre-wrap'}}>{report}</Typography>;
+      return <Typography
+        sx={{
+          marginLeft: '1em',
+          marginRight: '1em',
+          whiteSpace: 'pre-wrap'
+        }}
+      >
+        {report}
+      </Typography>;
     }
   };
 
