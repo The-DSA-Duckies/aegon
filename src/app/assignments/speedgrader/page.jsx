@@ -64,15 +64,11 @@ export default function Page() {
       codeFileContents[i] = codeFileContents[i].substring(indexOfNewline + 1);
     }
     codeFileNames.shift();
-
-    console.log('Code File Contents: ', codeFileContents);
-    console.log('Code File Names: ', codeFileNames);
     return true;
   };
 
   const getCodeFile = () => {
     const codeFileIndex = codeFileNames.indexOf(selectedCodeFile);
-    console.log('Code file index: ', codeFileIndex);
     return codeFileContents[codeFileIndex];
   };
 
@@ -160,17 +156,31 @@ export default function Page() {
             height: "15%",
           }}
         >
-          <Box>
-            <Typography
-              variant="h3"
-              sx={{
-                fontWeight: 'bold',
-                color: '#1c65ee'
-              }}
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: 'bold',
+              color: '#1c65ee'
+            }}
+          >
+            Project 2
+          </Typography>
+          {page === 0 && code != "" && parseCode() && (
+            <Select
+              value={selectedCodeFile}
+              onChange={handleCodeFileChange}
+              variant="outlined"
+              displayEmpty
+              style={{ marginTop: '1em'}}
             >
-              Project 2
-            </Typography>
-          </Box>
+              <MenuItem value="">Select a code file</MenuItem>
+              {codeFileNames.map((codeFile) => (
+                <MenuItem key={codeFile} value={codeFile}>
+                  {codeFile}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
         </Box>
         <Box
           sx={{
@@ -182,22 +192,6 @@ export default function Page() {
             width: "100%",
           }}
         >
-          {page === 0 && code != "" && parseCode() && (
-            <Select
-              value={selectedCodeFile}
-              onChange={handleCodeFileChange}
-              variant="outlined"
-              displayEmpty
-              style={{ }}
-            >
-              <MenuItem value="">Select a code file</MenuItem>
-              {codeFileNames.map((codeFile) => (
-                <MenuItem key={codeFile} value={codeFile}>
-                  {codeFile}
-                </MenuItem>
-              ))}
-            </Select>
-          )}
           <Paper
             elevation={3}
             sx={{
