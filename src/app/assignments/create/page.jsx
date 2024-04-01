@@ -10,7 +10,7 @@ export default function Page() {
       sx={{ 
         display: 'flex',
         height: '100vh', 
-        width: 'calc(100vw - 240px)'
+        width: 'calc(100vw - 65px)'
       }}
     > 
       <Box 

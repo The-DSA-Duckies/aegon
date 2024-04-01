@@ -1,13 +1,17 @@
 "use client";
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
-import Pagination from "@mui/material/Pagination";
-import MultipleSelect from "../../ui/studentSelector";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import { Prism as SyntaxHighlighter} from "react-syntax-highlighter";
+import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
+import MultipleSelect from "../../ui/studentSelector";
 
 const nameID = {
   "Oliver Hansen": 204884010,
@@ -19,29 +23,117 @@ const nameID = {
 export default function Page() {
   const [personName, setPersonName] = React.useState("");
   const [personID, setPersonID] = React.useState("");
-  const [grade, setGrade] = React.useState("");
-  const [feedback, setFeedback] = React.useState("");
+  const [points, setPoints] = React.useState("");
+  const [maxPoints, setMaxPoints] = React.useState(30);
+  const [feedback, setFeedback] = React.useState("Comments");
+  const [editedFeedback, setEditedFeedback] = React.useState("");
   const [code, setCode] = React.useState("");
   const [report, setReport] = React.useState("");
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = React.useState(0);
+  let [selectedCodeFile, setSelectedCodeFile] = React.useState("");
+  let codeFileContents = [""];
+  let codeFileNames = [""];
+  let currCodeFile = "";
 
   const handlePageChange = async (event, value) => {
     setPage(value);
   };
 
-  const handleGradeChange = async (event) => {
-    const response = await fetch("http://localhost:4000/");
-    setGrade(event.target.value);
-    const data = await response.json();
+  const handlePointsChange = async (event) => {
+    const regex = /^-?\d{0,2}\.?\d{0,2}$/;
+    if (regex.test(event.target.value)) {
+      if (event.target.value === "" || event.target.value === "-" || (parseFloat(event.target.value) <= 30.00 && parseFloat(event.target.value) >= -25.00)) {
+        setPoints(event.target.value);
+      }
+    }
+  };
+
+  const handleFeedbackChange = async (event) => {
+    setEditedFeedback(event.target.value);
+  };
+
+  const handleCodeFileChange = (event) => {
+    setSelectedCodeFile(event.target.value);
+  };
+
+  const parseCode = () => {
+    codeFileContents = [""];
+    codeFileNames = [""];
+
+    codeFileContents = code.split("CUR FILE == ");
+    codeFileContents.shift();
+
+    for (let i = 0; i < codeFileContents.length; i++) {
+      const indexOfNewline = codeFileContents[i].indexOf("\n");
+      codeFileNames.push(codeFileContents[i].substring(0, indexOfNewline));
+      codeFileContents[i] = codeFileContents[i].substring(indexOfNewline + 1);
+    }
+    codeFileNames.shift();
+
+    if (selectedCodeFile == "") {
+      selectedCodeFile = codeFileNames[0];
+    }
+    currCodeFile = getCodeFile();
+    return true;
+  };
+
+  const getCodeFile = () => {
+    const codeFileIndex = codeFileNames.indexOf(selectedCodeFile);
+    return codeFileContents[codeFileIndex];
   };
 
   const renderPage = () => {
-    if (page === 1) {
-      return <Typography>{feedback}</Typography>;
-    } else if (page === 2) {
-      return <Typography>{code}</Typography>;
-    } else {
-      return <Typography>{report}</Typography>;
+    if (page === 0) {
+      if (code === "") {
+        return (
+          <Typography
+            variant="h5"
+            sx={{
+              marginTop: '10em',
+              marginLeft: '0.5em'
+            }}
+          >
+            To get started, select a student from the Name dropdown.
+          </Typography>
+        );
+      }
+
+      return (
+        <SyntaxHighlighter 
+          language="cpp"
+          style={oneLight}
+          showLineNumbers
+          wrapLongLines
+        >
+          {currCodeFile}
+        </SyntaxHighlighter>
+      );
+    } else if (page === 1) {
+      if (report === "") {
+        return (
+          <Typography
+            variant="h5"
+            sx={{
+              marginTop: '10em',
+              marginLeft: '0.5em'
+            }}
+          >
+            To get started, select a student from the Name dropdown.
+          </Typography>
+        );
+      }
+
+      return (
+        <Typography
+          sx={{
+            marginLeft: '1em',
+            marginRight: '1em',
+            whiteSpace: 'pre-wrap'
+          }}
+        >
+          {report}
+        </Typography>
+      );
     }
   };
 
@@ -50,17 +142,16 @@ export default function Page() {
       sx={{
         display: "flex",
         height: "100vh",
-        width: "100vw",
+        width: 'calc(100vw - 65px)'
       }}
     >
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          // justifyContent: "center",
+          justifyContent: "center",
           height: "100%",
           width: "70%",
-          // backgroundColor: "green",
         }}
       >
         <Box
@@ -70,65 +161,32 @@ export default function Page() {
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
-            height: "14%",
+            height: "15%",
           }}
         >
-          <Box>Assignment Name</Box>
-          <Box
-            sx={
-              {
-                // paddingBottom: "20px",
-              }
-            }
-          >
-            Student Name
-          </Box>
-          {/* <Divider flexItem sx={{ alignSelf: "flex-end" }} /> */}
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            height: "8%",
-            gap: "50px",
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Box
+          <Typography
+            variant="h3"
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
+              fontWeight: 'bold',
+              color: '#1c65ee'
             }}
           >
-            <Box>12</Box>
-            <Box>Comments</Box>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Box>95%</Box>
-            <Box>Grade</Box>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Box>9.5</Box>
-            <Box>Points</Box>
-          </Box>
+            Project 2
+          </Typography>
+          {page === 0 && code != "" && parseCode() && (
+            <Select
+              value={selectedCodeFile}
+              onChange={handleCodeFileChange}
+              variant="outlined"
+              style={{ marginTop: '1em'}}
+            >
+              {codeFileNames.map((codeFile) => (
+                <MenuItem key={codeFile} value={codeFile}>
+                  {codeFile}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
         </Box>
         <Box
           sx={{
@@ -136,26 +194,41 @@ export default function Page() {
             flexDirection: "column",
             justifyContent: "flex-start",
             alignItems: "center",
-            height: "78%",
+            height: "80%",
             width: "100%",
           }}
         >
           <Paper
+            elevation={3}
             sx={{
-              width: "80%",
+              width: "90%"
             }}
-            style={{ maxHeight: 480, overflow: "auto" }}
+            style={{ minHeight: '90%', maxHeight: '90%', overflow: "auto" }}
           >
             {renderPage()}
           </Paper>
-          <Pagination
-            count={3}
-            page={page}
+          <Tabs
+            value={page}
             onChange={handlePageChange}
+            variant="outlined"
             sx={{
               paddingTop: "20px",
+              width: "50%"
             }}
-          />
+          >
+            <Tab
+              label="Code"
+              sx={{
+                flexGrow: 1
+              }}
+            />
+            <Tab
+              label="Report"
+              sx={{
+                flexGrow: 1
+              }}
+            />
+          </Tabs>
         </Box>
       </Box>
       <Box
@@ -163,16 +236,19 @@ export default function Page() {
           display: "flex",
           flexDirection: "column",
           height: "100%",
-          width: "30%",
-          // backgroundColor: "blue",
+          width: "28%",
         }}
       >
         <Box
           sx={{
             display: "flex",
-            height: "18%",
-            justifyContent: "center",
-            alignItems: "center",
+            height: "60%",
+            width: "100%",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            paddingTop: "2em",
+            alignItems: "flex-start",
+            gap: "25px",
           }}
         >
           <MultipleSelect
@@ -182,36 +258,43 @@ export default function Page() {
             setPersonID={setPersonID}
             nameID={nameID}
             setFeedback={setFeedback}
+            setEditedFeedback={setEditedFeedback}
             setCode={setCode}
             setReport={setReport}
+            setPoints={setPoints}
+            setSelectedCodeFile={setSelectedCodeFile}
           />
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            height: "60%",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            paddingTop: "50px",
-            alignItems: "flex-start",
-            paddingLeft: "70px",
-            gap: "50px",
-          }}
-        >
           <TextField
-            onChange={handleGradeChange}
-            label="Grade"
+            value={points}
+            onChange={handlePointsChange}
+            label="Points"
             variant="outlined"
-            sx={{ width: "300px" }}
+            helperText={"out of "+ maxPoints}
+            FormHelperTextProps={{ sx: {fontSize: '1rem'} }}
+            sx={{ width: "100px" }}
           />
           <TextField
+            variant="outlined"
             label="Comments"
             multiline
-            rows={8}
-            defaultValue=""
-            sx={{ width: "300px" }}
+            rows={20}
+            value={editedFeedback}
+            onChange={handleFeedbackChange}
+            fullWidth
           />
-          <Button variant="contained">Submit</Button>
+          <Button
+            sx={{
+              fontSize: '1.5rem',
+              padding: '0.25em 0.5em',
+              color: 'white',
+              backgroundColor: '#1c65ee',
+              whiteSpace: 'nowrap',
+              fontWeight: 'bold',
+              '&:hover': { backgroundColor: '#1c65ee'}
+            }}
+          >
+            Update Submission
+          </Button>
         </Box>
       </Box>
     </Box>
