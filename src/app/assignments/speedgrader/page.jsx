@@ -30,9 +30,10 @@ export default function Page() {
   const [code, setCode] = React.useState("");
   const [report, setReport] = React.useState("");
   const [page, setPage] = React.useState(0);
-  const [selectedCodeFile, setSelectedCodeFile] = React.useState("");
+  let [selectedCodeFile, setSelectedCodeFile] = React.useState("");
   let codeFileContents = [""];
   let codeFileNames = [""];
+  let currCodeFile = "";
 
   const handlePageChange = async (event, value) => {
     setPage(value);
@@ -68,6 +69,11 @@ export default function Page() {
       codeFileContents[i] = codeFileContents[i].substring(indexOfNewline + 1);
     }
     codeFileNames.shift();
+
+    if (selectedCodeFile == "") {
+      selectedCodeFile = codeFileNames[0];
+    }
+    currCodeFile = getCodeFile();
     return true;
   };
 
@@ -92,8 +98,6 @@ export default function Page() {
         );
       }
 
-      parseCode();
-      const codeFileContent = getCodeFile();
       return (
         <SyntaxHighlighter 
           language="cpp"
@@ -101,7 +105,7 @@ export default function Page() {
           showLineNumbers
           wrapLongLines
         >
-          {codeFileContent}
+          {currCodeFile}
         </SyntaxHighlighter>
       );
     } else if (page === 1) {
@@ -174,10 +178,8 @@ export default function Page() {
               value={selectedCodeFile}
               onChange={handleCodeFileChange}
               variant="outlined"
-              displayEmpty
               style={{ marginTop: '1em'}}
             >
-              <MenuItem value="">Select a code file</MenuItem>
               {codeFileNames.map((codeFile) => (
                 <MenuItem key={codeFile} value={codeFile}>
                   {codeFile}
@@ -258,9 +260,9 @@ export default function Page() {
             setFeedback={setFeedback}
             setEditedFeedback={setEditedFeedback}
             setCode={setCode}
-            setSelectedCodeFile={setSelectedCodeFile}
             setReport={setReport}
             setPoints={setPoints}
+            setSelectedCodeFile={setSelectedCodeFile}
           />
           <TextField
             value={points}
