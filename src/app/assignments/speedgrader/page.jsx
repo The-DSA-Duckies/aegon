@@ -29,7 +29,7 @@ const studentIDs = {
 };
 
 export default function Page() {
-  const [studentID, setStudentID] = React.useState("");
+  const [studentID, setStudentID] = React.useState(-1);
   const [points, setPoints] = React.useState("");
   const [maxPoints, setMaxPoints] = React.useState(30);
   const [feedback, setFeedback] = React.useState("Comments");
@@ -89,6 +89,15 @@ export default function Page() {
     return codeFileContents[codeFileIndex];
   };
 
+  const gotoGradescope = () => {
+    const gradescopeLink = 'https://www.gradescope.com/courses/' + GradescopeCourseID["Fa23"]
+      + '/assignments/' + GradescopeProject2ID["Fa23"]
+      + '/submissions/' + studentID
+      + '?view=files';
+
+    window.open(gradescopeLink, '_blank');
+  }
+
   const renderPage = () => {
     if (page === 0) {
       if (code === "") {
@@ -125,7 +134,7 @@ export default function Page() {
               marginLeft: '0.5em'
             }}
           >
-            To get started, select a student from the Name dropdown.
+            To get started, select a student from the Gradescope Student ID dropdown.
           </Typography>
         );
       }
@@ -214,28 +223,30 @@ export default function Page() {
           >
             {renderPage()}
           </Paper>
-          <Tabs
-            value={page}
-            onChange={handlePageChange}
-            variant="outlined"
-            sx={{
-              paddingTop: "20px",
-              width: "50%"
-            }}
-          >
-            <Tab
-              label="Code"
+          {studentID != -1 && (
+            <Tabs
+              value={page}
+              onChange={handlePageChange}
+              variant="outlined"
               sx={{
-                flexGrow: 1
+                paddingTop: "20px",
+                width: "50%"
               }}
-            />
-            <Tab
-              label="Report"
-              sx={{
-                flexGrow: 1
-              }}
-            />
-          </Tabs>
+            >
+              <Tab
+                label="Code"
+                sx={{
+                  flexGrow: 1
+                }}
+              />
+              <Tab
+                label="Report"
+                sx={{
+                  flexGrow: 1
+                }}
+              />
+            </Tabs>
+          )}
         </Box>
       </Box>
       <Box
@@ -268,15 +279,42 @@ export default function Page() {
             setPoints={setPoints}
             setSelectedCodeFile={setSelectedCodeFile}
           />
-          <TextField
-            value={points}
-            onChange={handlePointsChange}
-            label="Points"
-            variant="outlined"
-            helperText={"out of "+ maxPoints}
-            FormHelperTextProps={{ sx: {fontSize: '1rem'} }}
-            sx={{ width: "100px" }}
-          />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              gap: "50px"
+            }}
+          >
+            <TextField
+              value={points}
+              onChange={handlePointsChange}
+              label="Points"
+              variant="outlined"
+              helperText={"out of "+ maxPoints}
+              FormHelperTextProps={{ sx: {fontSize: '1rem'} }}
+              sx={{ width: "100px" }}
+            />
+            {studentID != -1 && (
+              <Button
+                onClick={gotoGradescope}
+                sx={{
+                  fontSize: '1rem',
+                  padding: '0.25em 0.5em',
+                  color: 'white',
+                  backgroundColor: '#fbac13',
+                  whiteSpace: 'nowrap',
+                  fontWeight: 'bold',
+                  marginBottom: '2em',
+                  '&:hover': { backgroundColor: '#fbac13'}
+                }}
+              >
+                Gradescope Submission
+              </Button>
+            )}
+          </Box>
           <TextField
             variant="outlined"
             label="Comments"
@@ -286,19 +324,21 @@ export default function Page() {
             onChange={handleFeedbackChange}
             fullWidth
           />
-          <Button
-            sx={{
-              fontSize: '1.5rem',
-              padding: '0.25em 0.5em',
-              color: 'white',
-              backgroundColor: '#1c65ee',
-              whiteSpace: 'nowrap',
-              fontWeight: 'bold',
-              '&:hover': { backgroundColor: '#1c65ee'}
-            }}
-          >
-            Update Submission
-          </Button>
+          {studentID != -1 && (
+            <Button
+              sx={{
+                fontSize: '1.5rem',
+                padding: '0.25em 0.5em',
+                color: 'white',
+                backgroundColor: '#1c65ee',
+                whiteSpace: 'nowrap',
+                fontWeight: 'bold',
+                '&:hover': { backgroundColor: '#1c65ee'}
+              }}
+            >
+              Update Submission
+            </Button>
+          )}
         </Box>
       </Box>
     </Box>
