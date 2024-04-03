@@ -23,16 +23,13 @@ const GradescopeProject2ID = {
   "Sp24": 3866728
 }
 
-const nameID = {
-  "Oliver Hansen": 204884010,
-  "Van Henry": 206666694,
-  "April Tucker": 207287544,
-  "Ralph Hubbard": 208447816,
+const studentIDs = {
+  "Fa23": [204884010, 206666694, 207287544, 208447816],
+  "Sp24": []
 };
 
 export default function Page() {
-  const [personName, setPersonName] = React.useState("");
-  const [personID, setPersonID] = React.useState("");
+  const [studentID, setStudentID] = React.useState("");
   const [points, setPoints] = React.useState("");
   const [maxPoints, setMaxPoints] = React.useState(30);
   const [feedback, setFeedback] = React.useState("Comments");
@@ -103,7 +100,7 @@ export default function Page() {
               marginLeft: '0.5em'
             }}
           >
-            To get started, select a student from the Name dropdown.
+            To get started, select a student from the Gradescope Student ID dropdown.
           </Typography>
         );
       }
@@ -262,11 +259,8 @@ export default function Page() {
           }}
         >
           <MultipleSelect
-            personName={personName}
-            setPersonName={setPersonName}
-            personID={personID}
-            setPersonID={setPersonID}
-            nameID={nameID}
+            setStudentID={setStudentID}
+            studentIDs={studentIDs}
             setFeedback={setFeedback}
             setEditedFeedback={setEditedFeedback}
             setCode={setCode}
