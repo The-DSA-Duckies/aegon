@@ -6,6 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useRouter } from 'next/navigation';
+import { UserButton } from '@clerk/nextjs';
 
 /* current topbar height is 100px */
 
@@ -96,8 +97,9 @@ export default function Topbar(props) {
               marginLeft: 'auto'
             }}
           >
+            <UserButton/>
             <Button
-              onClick={() => handleNavigate('/login')}
+              onClick={() => handleNavigate('/sign-in')}
               sx={{
                 color: '#1c65ee',
                 whiteSpace: 'nowrap',
@@ -107,7 +109,7 @@ export default function Topbar(props) {
               Login
             </Button>
             <Button
-              onClick={() => handleNavigate('/login/signup')}
+              onClick={() => handleNavigate('/sign-up')}
               sx={{
                 color: 'white',
                 backgroundColor: '#1c65ee',
