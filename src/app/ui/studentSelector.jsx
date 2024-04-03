@@ -7,26 +7,14 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-const names = ["Oliver Hansen", "Van Henry", "April Tucker", "Ralph Hubbard"];
-
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
-
 export default function MultipleSelect(props) {
   const theme = useTheme();
 
   const handleChange = async (event) => {
-    name = event.target.value;
-    props.setPersonName(name);
-    props.setPersonID(props.nameID[props.personName]);
+    const studentID = event.target.value;
+    props.setStudentID(studentID);
     const uri =
-      "http://localhost:4000/submissions?student_id=" + props.nameID[name];
+      "http://localhost:4000/submissions?student_id=" + studentID;
     const response = await fetch(uri);
     const data = await response.json();
     const feedback = data[0]["feedback"];
@@ -44,21 +32,21 @@ export default function MultipleSelect(props) {
   return (
     <div>
       <FormControl sx={{ width: 250 }}>
-        <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+        <InputLabel id="Gradescope-student-ID-label">Gradescope Student ID</InputLabel>
         <Select
-          labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
+          labelId="Gradescope-student-ID-label"
+          id="Gradescope-student-ID-select"
           value={props.personName}
           onChange={handleChange}
-          input={<OutlinedInput label="Name" />}
+          input={<OutlinedInput label="Gradescope Student ID" />}
         >
-          {names.map((name) => (
+          {props.studentIDs["Fa23"].map((studentID) => (
             <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, props.personName, theme)}
+              key={studentID}
+              value={studentID}
+              // style={getStyles(name, props.personName, theme)}
             >
-              {name}
+              {studentID}
             </MenuItem>
           ))}
         </Select>
