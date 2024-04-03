@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 
 /* current topbar height is 100px */
 
-export default function ButtonAppBar() {
+export default function Topbar(props) {
   const router = useRouter();
 
   const handleNavigate = (path) => {
@@ -122,6 +122,7 @@ export default function ButtonAppBar() {
           </Box>
         </Toolbar>
       </AppBar>
+      <Box component="main">{props.children}</Box>
     </Box>
   );
 }
