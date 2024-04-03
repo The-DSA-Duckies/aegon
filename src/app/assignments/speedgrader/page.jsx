@@ -9,6 +9,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Prism as SyntaxHighlighter} from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import MultipleSelect from "../../ui/studentSelector";
@@ -269,52 +270,52 @@ export default function Page() {
             gap: "25px",
           }}
         >
-          <MultipleSelect
-            setStudentID={setStudentID}
-            studentIDs={studentIDs}
-            setFeedback={setFeedback}
-            setEditedFeedback={setEditedFeedback}
-            setCode={setCode}
-            setReport={setReport}
-            setPoints={setPoints}
-            setSelectedCodeFile={setSelectedCodeFile}
-          />
           <Box
             sx={{
               display: "flex",
               flexDirection: "row",
               justifyContent: "flex-start",
               alignItems: "center",
-              gap: "50px"
+              gap: "20px"
             }}
           >
-            <TextField
-              value={points}
-              onChange={handlePointsChange}
-              label="Points"
-              variant="outlined"
-              helperText={"out of "+ maxPoints}
-              FormHelperTextProps={{ sx: {fontSize: '1rem'} }}
-              sx={{ width: "100px" }}
+            <MultipleSelect
+              setStudentID={setStudentID}
+              studentIDs={studentIDs}
+              setFeedback={setFeedback}
+              setEditedFeedback={setEditedFeedback}
+              setCode={setCode}
+              setReport={setReport}
+              setPoints={setPoints}
+              setSelectedCodeFile={setSelectedCodeFile}
             />
             {studentID != -1 && (
               <Button
                 onClick={gotoGradescope}
                 sx={{
-                  fontSize: '1rem',
+                  fontSize: '0.85rem',
                   padding: '0.25em 0.5em',
                   color: 'white',
                   backgroundColor: '#fbac13',
                   whiteSpace: 'nowrap',
                   fontWeight: 'bold',
-                  marginBottom: '2em',
-                  '&:hover': { backgroundColor: '#fbac13'}
+                  '&:hover': { backgroundColor: '#fbac13'},
+                  gap: '5px'
                 }}
               >
-                Gradescope Submission
+                Gradescope <ExitToAppIcon/>
               </Button>
             )}
           </Box>
+          <TextField
+            value={points}
+            onChange={handlePointsChange}
+            label="Points"
+            variant="outlined"
+            helperText={"out of "+ maxPoints}
+            FormHelperTextProps={{ sx: {fontSize: '1rem'} }}
+            sx={{ width: "100px" }}
+          />
           <TextField
             variant="outlined"
             label="Comments"
