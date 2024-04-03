@@ -13,6 +13,16 @@ import { Prism as SyntaxHighlighter} from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import MultipleSelect from "../../ui/studentSelector";
 
+const GradescopeCourseID = {
+  "Fa23": 576143,
+  "Sp24": 695053,
+};
+
+const GradescopeProject2ID = {
+  "Fa23": 3089460,
+  "Sp24": 3866728
+}
+
 const nameID = {
   "Oliver Hansen": 204884010,
   "Van Henry": 206666694,
