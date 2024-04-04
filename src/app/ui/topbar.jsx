@@ -137,7 +137,7 @@ export default function Topbar(props) {
               >
                 Your Profile
               </Typography>
-              <UserButton afterSignOutUrl='/sign-in'/>
+              <UserButton afterSignOutUrl='/'/>
             </>
           )}
           </Box>

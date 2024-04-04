@@ -1,7 +1,9 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Image from 'next/image'
-import { SignIn } from '@clerk/nextjs';
+import Link from 'next/link'
+import DoLogin from './doLogin';
 
 export default function Page() {
     return (
@@ -28,15 +30,43 @@ export default function Page() {
                 />
             </Box>
             <Box 
-                sx={{ 
+                sx={{
                     width: '50%',
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}
             >
-                <SignIn/>
+                <Typography 
+                    variant="h2"
+                    sx={{
+                        marginRight: '7.5em',
+                        color: '#1d63d4'
+                    }}
+                >
+                    Login
+                </Typography>
+                <Typography
+                    variant="h6"
+                    sx={{
+                        color: 'grey',
+                        marginRight: '15em'
+                    }}
+                >
+                    Don't have an account? <Link href="/sign-up">Sign up</Link>
+                </Typography>
+                <Box 
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                >
+                    <DoLogin/>
+                </Box>
             </Box>
-            </Box>
+        </Box>
     );
 }

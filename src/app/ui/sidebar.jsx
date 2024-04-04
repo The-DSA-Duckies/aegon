@@ -11,7 +11,6 @@ import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {
   Divider,
@@ -283,7 +282,7 @@ export default function Sidebar(props) {
                 gap: open ? "20px" : "0px"
               }}
             >
-              <UserButton
+              <UserButton afterSignOutUrl='/'
                 sx={{
                   minWidth: 0,
                   margin: open ? 3 : "auto",
