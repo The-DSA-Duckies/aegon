@@ -6,11 +6,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useRouter } from 'next/navigation';
-import { UserButton } from '@clerk/nextjs';
+import { UserButton, useSession } from '@clerk/nextjs';
 
 /* current topbar height is 100px */
 
 export default function Topbar(props) {
+  const { session, loading } = useSession();
   const router = useRouter();
 
   const handleNavigate = (path) => {
@@ -97,30 +98,48 @@ export default function Topbar(props) {
               marginLeft: 'auto'
             }}
           >
-            <UserButton/>
-            <Button
-              onClick={() => handleNavigate('/sign-in')}
-              sx={{
-                color: '#1c65ee',
-                whiteSpace: 'nowrap',
-                fontWeight: 'bold'
-              }}
-            >
-              Login
-            </Button>
-            <Button
-              onClick={() => handleNavigate('/sign-up')}
-              sx={{
-                color: 'white',
-                backgroundColor: '#1c65ee',
-                whiteSpace: 'nowrap',
-                marginLeft: '5em',
-                fontWeight: 'bold',
-                '&:hover': { backgroundColor: '#1c65ee',}
-              }}
-            >
-              Sign Up
-            </Button>
+          {!session && !loading ? (
+            <>
+              <Button
+                onClick={() => handleNavigate('/sign-in')}
+                sx={{
+                  color: '#1c65ee',
+                  whiteSpace: 'nowrap',
+                  fontWeight: 'bold'
+                }}
+              >
+                Login
+              </Button>
+              <Button
+                onClick={() => handleNavigate('/sign-up')}
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#1c65ee',
+                  whiteSpace: 'nowrap',
+                  marginLeft: '5em',
+                  fontWeight: 'bold',
+                  '&:hover': { backgroundColor: '#1c65ee',}
+                }}
+              >
+                Sign Up
+              </Button>
+            </>
+          ) : (
+            <>
+              <Typography 
+                variant="h6"
+                component="div"
+                sx={{
+                  color: 'black',
+                  whiteSpace: 'nowrap',
+                  marginRight: '1em'
+                }}
+              >
+                Your Profile
+              </Typography>
+              <UserButton afterSignOutUrl='/sign-in'/>
+            </>
+          )}
           </Box>
         </Toolbar>
       </AppBar>

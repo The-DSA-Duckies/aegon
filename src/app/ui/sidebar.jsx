@@ -22,6 +22,7 @@ import {
   Stack,
 } from "@mui/material";
 import { useRouter } from 'next/navigation';
+import { UserButton } from "@clerk/nextjs";
 
 const drawerWidth = 240; // // sidebar width when closed is 65px
 
@@ -243,7 +244,7 @@ export default function Sidebar(props) {
             </ListItemButton>
           </ListItem>
           {/*About us*/}
-          <ListItem key={"About us"} disablePadding sx={{ display: "block" }}>
+          <ListItem key={"About Us"} disablePadding sx={{ display: "block" }}>
             <ListItemButton onClick={() => handleNavigate('/about-us')}
               sx={{
                 minHeight: 48,
@@ -262,7 +263,7 @@ export default function Sidebar(props) {
                 <InfoOutlinedIcon />
               </ListItemIcon>
               <ListItemText
-                primary={"About us"}
+                primary={"About Us"}
                 sx={{ opacity: open ? 1 : 0, color: "black" }}
               />
             </ListItemButton>
@@ -272,28 +273,29 @@ export default function Sidebar(props) {
         {/* Profile Page */}
         <List>
           <ListItem key={"Profile"} disablePadding sx={{ display: "block" }}>
-            <ListItemButton
+            <Box
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                px: 2,
+                display: "flex",
+                flexDirection: "row",
+                gap: "20px"
               }}
             >
-              <ListItemIcon
+              <UserButton
                 sx={{
                   minWidth: 0,
-                  mr: open ? 3 : "auto",
+                  margin: open ? 3 : "auto",
                   justifyContent: "center",
                   color: "black",
                 }}
-              >
-                <AccountCircleIcon />
-              </ListItemIcon>
+              />
               <ListItemText
                 primary={"Your Profile"}
                 sx={{ opacity: open ? 1 : 0, color: "black" }}
               />
-            </ListItemButton>
+            </Box>
           </ListItem>
         </List>
       </Drawer>
