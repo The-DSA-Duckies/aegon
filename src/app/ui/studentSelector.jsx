@@ -11,13 +11,12 @@ export default function MultipleSelect(props) {
   const theme = useTheme();
 
   const handleChange = async (event) => {
-    name = event.target.value;
-    props.setPersonName(name);
-    props.setPersonID(props.nameID[props.personName]);
-    // const uri =
-    //   "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
-    //   props.nameID[name];
-    const uri = "http://localhost:4000/submissions?student_id=" + studentID;
+    const studentID = event.target.value;
+    props.setStudentID(studentID);
+    const uri =
+      "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
+      studentID;
+    // const uri = "http://localhost:4000/submissions?student_id=" + studentID;
     const response = await fetch(uri);
     const data = await response.json();
 

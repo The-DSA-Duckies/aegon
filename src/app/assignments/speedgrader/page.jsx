@@ -47,7 +47,8 @@ export default function Page() {
     // Send in edited feedback
     const formData = { feedback: editedFeedback, grade: points };
     const uri =
-      "http://localhost:4000/submissions?student_id=" + nameID[personName];
+      "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
+      studentID;
 
     const response = await fetch(uri, {
       method: "PUT",
@@ -56,8 +57,8 @@ export default function Page() {
       },
       body: JSON.stringify(formData),
     });
-    const data = await response.json();
-    console.log(data);
+    // const data = await response.json();
+    // console.log(data);
   };
 
   const handlePageChange = async (event, value) => {
