@@ -25,12 +25,21 @@ export default function MultipleSelect(props) {
     name = event.target.value;
     props.setPersonName(name);
     props.setPersonID(props.nameID[props.personName]);
+    // const uri =
+    //   "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
+    //   props.nameID[name];
     const uri =
-      "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
-      props.nameID[name];
+      "http://localhost:4000/submissions?student_id=" + props.nameID[name];
     const response = await fetch(uri);
     const data = await response.json();
-    const feedback = data[0]["feedback"];
+
+    let feedback = "";
+    if (data[0]["editedFeedback"] == undefined) {
+      feedback = data[0]["feedback"];
+    } else {
+      feedback = data[0]["editedFeedback"];
+    }
+    // const feedback = data[0]["feedback"];
     props.setFeedback(feedback);
     props.setEditedFeedback(feedback);
     props.setReport(data[0]["report"]);
