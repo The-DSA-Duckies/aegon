@@ -57,6 +57,7 @@ export default function DoLogin() {
       </Typography>
       <TextField 
         id="outlined-required"
+        type="password"
         value={passValue}
         onChange={handlePassChange}
         fullWidth

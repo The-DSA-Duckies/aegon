@@ -73,6 +73,7 @@ export default function DoSignup() {
             </Typography>
             <TextField 
               id="outlined-required"
+              type="password"
               value={passValue}
               onChange={handlePassChange}
               fullWidth
@@ -90,6 +91,7 @@ export default function DoSignup() {
             </Typography>
             <TextField
               id="outlined-required"
+              type="password"
               value={passConfirmValue}
               onChange={handlePassConfirmChange}
               fullWidth
