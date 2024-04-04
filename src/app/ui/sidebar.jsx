@@ -280,7 +280,7 @@ export default function Sidebar(props) {
                 px: 2,
                 display: "flex",
                 flexDirection: "row",
-                gap: "20px"
+                gap: open ? "20px" : "0px"
               }}
             >
               <UserButton
