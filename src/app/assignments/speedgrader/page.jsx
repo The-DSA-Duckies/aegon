@@ -29,12 +29,69 @@ const studentIDs = {
   Sp24: [],
 };
 
+const StudentCodeReport = React.memo(function StudentCodeReport(props) {
+  console.log('Rerendering StudentCodeReport');
+  if (props.page === 0) {
+    if (props.currCodeFile === "") {
+      return (
+        <Typography
+          variant="h5"
+          sx={{
+            marginTop: "10em",
+            marginLeft: "0.5em",
+          }}
+        >
+          To get started, select a student from the Gradescope Student ID
+          dropdown.
+        </Typography>
+      );
+    }
+
+    return (
+      <SyntaxHighlighter
+        language="cpp"
+        style={oneLight}
+        showLineNumbers
+        wrapLongLines
+      >
+        {props.currCodeFile}
+      </SyntaxHighlighter>
+    );
+  } else if (props.page === 1) {
+    if (props.report === "") {
+      return (
+        <Typography
+          variant="h5"
+          sx={{
+            marginTop: "10em",
+            marginLeft: "0.5em",
+          }}
+        >
+          To get started, select a student from the Gradescope Student ID
+          dropdown.
+        </Typography>
+      );
+    }
+
+    return (
+      <Typography
+        sx={{
+          marginLeft: "1em",
+          marginRight: "1em",
+          whiteSpace: "pre-wrap",
+        }}
+      >
+        {props.report}
+      </Typography>
+    );
+  }
+});
+
 export default function Page() {
   const [studentID, setStudentID] = React.useState(-1);
   const [points, setPoints] = React.useState("");
   const [maxPoints, setMaxPoints] = React.useState(30);
   const [feedback, setFeedback] = React.useState("Comments");
-  const [editedFeedback, setEditedFeedback] = React.useState("");
   const [code, setCode] = React.useState("");
   const [report, setReport] = React.useState("");
   const [page, setPage] = React.useState(0);
@@ -45,7 +102,7 @@ export default function Page() {
 
   const handleUploadSubmission = async () => {
     // Send in edited feedback
-    const formData = { feedback: editedFeedback, grade: points };
+    const formData = { feedback: feedback, grade: points };
     const uri =
       "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
       studentID;
@@ -61,11 +118,11 @@ export default function Page() {
     // console.log(data);
   };
 
-  const handlePageChange = async (event, value) => {
+  const handlePageChange = (event, value) => {
     setPage(value);
   };
 
-  const handlePointsChange = async (event) => {
+  const handlePointsChange = (event) => {
     const regex = /^-?\d{0,2}\.?\d{0,2}$/;
     if (regex.test(event.target.value)) {
       if (
@@ -79,9 +136,9 @@ export default function Page() {
     }
   };
 
-  const handleFeedbackChange = async (event) => {
-    setEditedFeedback(event.target.value);
-  };
+  const handleFeedbackChange = (event) => {
+    setFeedback(event.target.value);
+  }
 
   const handleCodeFileChange = (event) => {
     setSelectedCodeFile(event.target.value);
@@ -124,63 +181,6 @@ export default function Page() {
       "?view=files";
 
     window.open(gradescopeLink, "_blank");
-  };
-
-  const renderPage = () => {
-    if (page === 0) {
-      if (code === "") {
-        return (
-          <Typography
-            variant="h5"
-            sx={{
-              marginTop: "10em",
-              marginLeft: "0.5em",
-            }}
-          >
-            To get started, select a student from the Gradescope Student ID
-            dropdown.
-          </Typography>
-        );
-      }
-
-      return (
-        <SyntaxHighlighter
-          language="cpp"
-          style={oneLight}
-          showLineNumbers
-          wrapLongLines
-        >
-          {currCodeFile}
-        </SyntaxHighlighter>
-      );
-    } else if (page === 1) {
-      if (report === "") {
-        return (
-          <Typography
-            variant="h5"
-            sx={{
-              marginTop: "10em",
-              marginLeft: "0.5em",
-            }}
-          >
-            To get started, select a student from the Gradescope Student ID
-            dropdown.
-          </Typography>
-        );
-      }
-
-      return (
-        <Typography
-          sx={{
-            marginLeft: "1em",
-            marginRight: "1em",
-            whiteSpace: "pre-wrap",
-          }}
-        >
-          {report}
-        </Typography>
-      );
-    }
   };
 
   return (
@@ -251,7 +251,11 @@ export default function Page() {
             }}
             style={{ minHeight: "90%", maxHeight: "90%", overflow: "auto" }}
           >
-            {renderPage()}
+            <StudentCodeReport 
+              page={page}
+              currCodeFile={currCodeFile}
+              report={report}
+            />
           </Paper>
           {studentID != -1 && (
             <Tabs
@@ -312,7 +316,6 @@ export default function Page() {
               setStudentID={setStudentID}
               studentIDs={studentIDs}
               setFeedback={setFeedback}
-              setEditedFeedback={setEditedFeedback}
               setCode={setCode}
               setReport={setReport}
               setPoints={setPoints}
@@ -350,7 +353,7 @@ export default function Page() {
             label="Comments"
             multiline
             rows={20}
-            value={editedFeedback}
+            value={feedback}
             onChange={handleFeedbackChange}
             fullWidth
           />

@@ -28,7 +28,6 @@ export default function MultipleSelect(props) {
     }
     // const feedback = data[0]["feedback"];
     props.setFeedback(feedback);
-    props.setEditedFeedback(feedback);
     props.setReport(data[0]["report"]);
     props.setCode(data[0]["code"]);
     props.setSelectedCodeFile("");
