@@ -105,6 +105,7 @@ export default function Page() {
   const [code, setCode] = React.useState("");
   const [report, setReport] = React.useState("");
   const [page, setPage] = React.useState(0);
+  const [gotSubmissions, setGotSubmissions] = React.useState(false);
   let [selectedCodeFile, setSelectedCodeFile] = React.useState("");
   let codeFileContents = [""];
   let codeFileNames = [""];
@@ -124,11 +125,12 @@ export default function Page() {
     }
     setStudentIDs(tempIDs);
     setStudentDict(dataDict);
+    setGotSubmissions(true);
   };
 
   React.useEffect(() => {
     getSubmissionIDs();
-  }, [studentIDs]);
+  }, [gotSubmissions]);
 
   const handleUploadSubmission = async () => {
     // Send in edited feedback
