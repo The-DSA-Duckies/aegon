@@ -57,13 +57,13 @@ export default function MultipleSelect(props) {
           onChange={handleChange}
           input={<OutlinedInput label="Gradescope Student ID" />}
         >
-          {props.submissionData.map((studentID) => (
+          {props.studentIDs.map((studentID) => (
             <MenuItem
-              key={studentID["student_id"]}
-              value={studentID["studentid_ta"]}
+              key={studentID}
+              value={studentID}
               // style={getStyles(name, props.personName, theme)}
             >
-              {studentID["studentid_ta"]}
+              {studentID}
             </MenuItem>
           ))}
         </Select>

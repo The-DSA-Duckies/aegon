@@ -95,7 +95,7 @@ const comparator = (a, b) => {
 
 export default function Page() {
   const [studentID, setStudentID] = React.useState(-1);
-  // const [studentIDs, setStudentIDs] = React.useState([]);
+  const [studentIDs, setStudentIDs] = React.useState([]);
   const [submissionData, setSubmissionData] = React.useState([]);
   const [index, setIndex] = React.useState(0);
   const [points, setPoints] = React.useState("");
@@ -115,12 +115,16 @@ export default function Page() {
     const data = await response.json();
     data.sort(comparator);
     setSubmissionData(data);
-    setStudentID(data[index]);
+    let tempIDs = [];
+    for (let value of submissionData) {
+      tempIDs.push(value["student_id"]);
+    }
+    setStudentIDs(tempIDs);
   };
 
   React.useEffect(() => {
     getSubmissionIDs();
-  });
+  }, []);
 
   const handleUploadSubmission = async () => {
     // Send in edited feedback
@@ -338,7 +342,7 @@ export default function Page() {
           >
             <MultipleSelect
               setStudentID={setStudentID}
-              submissionData={submissionData}
+              studentIDs={studentIDs}
               setFeedback={setFeedback}
               setCode={setCode}
               setReport={setReport}
