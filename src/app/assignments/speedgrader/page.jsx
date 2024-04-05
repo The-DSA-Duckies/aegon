@@ -34,16 +34,38 @@ const StudentCodeReport = React.memo(function StudentCodeReport(props) {
   if (props.page === 0) {
     if (props.currCodeFile === "") {
       return (
-        <Typography
-          variant="h5"
-          sx={{
-            marginTop: "10em",
-            marginLeft: "0.5em",
-          }}
-        >
-          To get started, select a student from the Gradescope Student ID
-          dropdown.
-        </Typography>
+        <div>
+          <img
+            sx={{
+              textAlign: "center",
+              width: "100%",
+              display: "block",
+              margin: "auto",
+            }}
+            src="/empty_pond.png"
+            alt="Logo"
+            style={{
+              margin: "auto",
+              display: "flex",
+              alignItems: "center",
+              width: "50%",
+              height: "50%",
+              padding: "0px",
+            }}
+          />
+          <Typography
+            variant="h5"
+            sx={{
+              marginLeft: "0.5em",
+              textAlign: "center",
+            }}
+          >
+            This page is <strong>ducking</strong> empty! <br />
+            Time to dive in by selecting a <strong>student ID</strong> :D
+            {/*No ducks in our pond just yet! <br /> Select a
+            <strong> student ID</strong> in the dropdown to find your flock.*/}
+          </Typography>
+        </div>
       );
     }
 
@@ -394,20 +416,23 @@ export default function Page() {
             onChange={handleFeedbackChange}
             fullWidth
           />
-          <Button
-            onClick={handleUploadSubmission}
-            sx={{
-              fontSize: "1.5rem",
-              padding: "0.25em 0.5em",
-              color: "white",
-              backgroundColor: "#1c65ee",
-              whiteSpace: "nowrap",
-              fontWeight: "bold",
-              "&:hover": { backgroundColor: "#1c65ee" },
-            }}
-          >
-            Update Submission
-          </Button>
+          {studentID != -1 && (
+            <Button
+              onClick={handleUploadSubmission}
+              sx={{
+                fontSize: "1.5rem",
+                padding: "0.25em 0.75em",
+                color: "white",
+                backgroundColor: "#1c65ee",
+                borderRadius: "5px",
+                whiteSpace: "nowrap",
+                fontWeight: "bold",
+                "&:hover": { backgroundColor: "#1c65ee" },
+              }}
+            >
+              Update Submission
+            </Button>
+          )}
         </Box>
       </Box>
     </Box>
