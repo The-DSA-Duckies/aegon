@@ -11,6 +11,7 @@ export default function MultipleSelect(props) {
   const theme = useTheme();
 
   const handleChange = async (event) => {
+    //TODO: This is so broken right now
     const studentID = event.target.value;
     props.setStudentID(studentID);
     const uri =
@@ -21,20 +22,26 @@ export default function MultipleSelect(props) {
     const data = await response.json();
 
     let feedback = "";
-    if (data[0]["editedFeedback"] == undefined) {
+    if (
+      data[0]["edited_feedback"] === undefined ||
+      data[0]["edited_feedback"] === ""
+    ) {
       feedback = data[0]["feedback"];
     } else {
-      feedback = data[0]["editedFeedback"];
+      feedback = data[0]["edited_feedback"];
     }
     // const feedback = data[0]["feedback"];
     props.setFeedback(feedback);
     props.setReport(data[0]["report"]);
     props.setCode(data[0]["code"]);
     props.setSelectedCodeFile("");
-
-    let originalScore = feedback.substring(feedback.indexOf("Score: "));
-    originalScore = originalScore.substring(7, originalScore.length - 3);
-    props.setPoints(parseFloat(originalScore));
+    let points = 0;
+    if (data[0]["edited_grade"] === undefined) {
+      points = data[0]["grade"];
+    } else {
+      points = data[0]["edited_grade"];
+    }
+    props.setPoints(String(points));
   };
 
   return (
@@ -46,17 +53,17 @@ export default function MultipleSelect(props) {
         <Select
           labelId="Gradescope-student-ID-label"
           id="Gradescope-student-ID-select"
-          value={props.personName}
+          // value={props.personName}
           onChange={handleChange}
           input={<OutlinedInput label="Gradescope Student ID" />}
         >
-          {props.studentIDs["Fa23"].map((studentID) => (
+          {props.studentIDs.map((studentID) => (
             <MenuItem
               key={studentID}
               value={studentID}
               // style={getStyles(name, props.personName, theme)}
             >
-              {studentID}
+              {props.studentDict[studentID]}
             </MenuItem>
           ))}
         </Select>
