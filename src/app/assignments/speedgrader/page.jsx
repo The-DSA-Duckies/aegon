@@ -112,7 +112,9 @@ export default function Page() {
   let currCodeFile = "";
 
   const getSubmissionIDs = async () => {
-    const id_uri = "http://localhost:4000/submissions";
+    // const id_uri = "http://localhost:4000/submissions";
+    const id_uri =
+      "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions";
     const response = await fetch(id_uri);
     const data = await response.json();
     data.sort(comparator);
@@ -135,11 +137,11 @@ export default function Page() {
   const handleUploadSubmission = async () => {
     // Send in edited feedback
     const formData = { feedback: feedback, grade: points };
-    // const uri =
-    //   "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
-    //   studentID;
+    const uri =
+      "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
+      studentID;
 
-    const uri = "http://localhost:4000/submissions?student_id=" + studentID;
+    // const uri = "http://localhost:4000/submissions?student_id=" + studentID;
 
     const response = await fetch(uri, {
       method: "PUT",

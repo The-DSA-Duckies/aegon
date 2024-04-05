@@ -14,10 +14,10 @@ export default function MultipleSelect(props) {
     //TODO: This is so broken right now
     const studentID = event.target.value;
     props.setStudentID(studentID);
-    // const uri =
-    //   "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
-    //   studentID;
-    const uri = "http://localhost:4000/submissions?student_id=" + studentID;
+    const uri =
+      "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
+      studentID;
+    // const uri = "http://localhost:4000/submissions?student_id=" + studentID;
     const response = await fetch(uri);
     const data = await response.json();
 
