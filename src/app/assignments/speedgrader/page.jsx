@@ -349,7 +349,7 @@ export default function Page() {
               setPoints={setPoints}
               setSelectedCodeFile={setSelectedCodeFile}
             />
-            {studentID != -1 && (
+            {studentID.toString().length == 9 && (
               <Button
                 onClick={gotoGradescope}
                 sx={{
