@@ -24,13 +24,13 @@ const GradescopeProject2ID = {
   Sp24: 3866728,
 };
 
-const studentIDs = {
-  Fa23: [204884010, 206666694, 207287544, 208447816],
-  Sp24: [],
-};
+// const studentIDs = {
+//   Fa23: [204884010, 206666694, 207287544, 208447816],
+//   Sp24: [240225103],
+// };
 
 const StudentCodeReport = React.memo(function StudentCodeReport(props) {
-  console.log('Rerendering StudentCodeReport');
+  console.log("Rerendering StudentCodeReport");
   if (props.page === 0) {
     if (props.currCodeFile === "") {
       return (
@@ -87,8 +87,17 @@ const StudentCodeReport = React.memo(function StudentCodeReport(props) {
   }
 });
 
+const comparator = (a, b) => {
+  if (a["studentid_ta"] > b["studentid_ta"]) return 1;
+  else if (a["studentid_ta"] < b["studentid_ta"]) return -1;
+  else return 0;
+};
+
 export default function Page() {
   const [studentID, setStudentID] = React.useState(-1);
+  // const [studentIDs, setStudentIDs] = React.useState([]);
+  const [submissionData, setSubmissionData] = React.useState([]);
+  const [index, setIndex] = React.useState(0);
   const [points, setPoints] = React.useState("");
   const [maxPoints, setMaxPoints] = React.useState(30);
   const [feedback, setFeedback] = React.useState("Comments");
@@ -100,12 +109,27 @@ export default function Page() {
   let codeFileNames = [""];
   let currCodeFile = "";
 
+  const getSubmissionIDs = async () => {
+    const id_uri = "http://localhost:4000/submissions";
+    const response = await fetch(id_uri);
+    const data = await response.json();
+    data.sort(comparator);
+    setSubmissionData(data);
+    setStudentID(data[index]);
+  };
+
+  React.useEffect(() => {
+    getSubmissionIDs();
+  });
+
   const handleUploadSubmission = async () => {
     // Send in edited feedback
     const formData = { feedback: feedback, grade: points };
-    const uri =
-      "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
-      studentID;
+    // const uri =
+    //   "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
+    //   studentID;
+
+    const uri = "http://localhost:4000/submissions?student_id=" + studentID;
 
     const response = await fetch(uri, {
       method: "PUT",
@@ -138,7 +162,7 @@ export default function Page() {
 
   const handleFeedbackChange = (event) => {
     setFeedback(event.target.value);
-  }
+  };
 
   const handleCodeFileChange = (event) => {
     setSelectedCodeFile(event.target.value);
@@ -173,9 +197,9 @@ export default function Page() {
   const gotoGradescope = () => {
     const gradescopeLink =
       "https://www.gradescope.com/courses/" +
-      GradescopeCourseID["Fa23"] +
+      GradescopeCourseID["Sp24"] +
       "/assignments/" +
-      GradescopeProject2ID["Fa23"] +
+      GradescopeProject2ID["Sp24"] +
       "/submissions/" +
       studentID +
       "?view=files";
@@ -251,7 +275,7 @@ export default function Page() {
             }}
             style={{ minHeight: "90%", maxHeight: "90%", overflow: "auto" }}
           >
-            <StudentCodeReport 
+            <StudentCodeReport
               page={page}
               currCodeFile={currCodeFile}
               report={report}
@@ -314,7 +338,7 @@ export default function Page() {
           >
             <MultipleSelect
               setStudentID={setStudentID}
-              studentIDs={studentIDs}
+              submissionData={submissionData}
               setFeedback={setFeedback}
               setCode={setCode}
               setReport={setReport}
