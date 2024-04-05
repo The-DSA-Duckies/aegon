@@ -124,7 +124,7 @@ export default function Page() {
 
   React.useEffect(() => {
     getSubmissionIDs();
-  }, []);
+  }, [studentIDs]);
 
   const handleUploadSubmission = async () => {
     // Send in edited feedback
