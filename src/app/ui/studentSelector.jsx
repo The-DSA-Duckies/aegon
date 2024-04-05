@@ -63,7 +63,7 @@ export default function MultipleSelect(props) {
               value={studentID}
               // style={getStyles(name, props.personName, theme)}
             >
-              {studentID}
+              {props.studentDict[studentID]}
             </MenuItem>
           ))}
         </Select>

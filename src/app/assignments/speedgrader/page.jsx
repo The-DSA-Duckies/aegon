@@ -96,6 +96,7 @@ const comparator = (a, b) => {
 export default function Page() {
   const [studentID, setStudentID] = React.useState(-1);
   const [studentIDs, setStudentIDs] = React.useState([]);
+  const [studentDict, setStudentDict] = React.useState({});
   const [submissionData, setSubmissionData] = React.useState([]);
   const [index, setIndex] = React.useState(0);
   const [points, setPoints] = React.useState("");
@@ -116,10 +117,13 @@ export default function Page() {
     data.sort(comparator);
     setSubmissionData(data);
     let tempIDs = [];
+    let dataDict = {};
     for (let value of submissionData) {
       tempIDs.push(value["student_id"]);
+      dataDict[value["student_id"]] = value["studentid_ta"];
     }
     setStudentIDs(tempIDs);
+    setStudentDict(dataDict);
   };
 
   React.useEffect(() => {
@@ -343,6 +347,7 @@ export default function Page() {
             <MultipleSelect
               setStudentID={setStudentID}
               studentIDs={studentIDs}
+              studentDict={studentDict}
               setFeedback={setFeedback}
               setCode={setCode}
               setReport={setReport}
