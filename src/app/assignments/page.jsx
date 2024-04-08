@@ -96,14 +96,12 @@ export default function Page() {
                 </Typography>
               />
               <ListItemText 
-                primary= <Typography
-                  variant="h4"
-                  sx={{
-
-                  }}
-                >
-                  Status: <span style={{ color: '#fbac13' }}>Graded by LLM</span>
-                </Typography>
+                primary= 
+                  <Typography
+                    variant="h4"
+                  >
+                    Status: <span style={{ color: '#fbac13' }}>Graded by LLM</span>
+                  </Typography>
               />
               <ListItemButton
                 onClick={() => handleNavigate('/assignments/speedgrader')}
@@ -112,13 +110,13 @@ export default function Page() {
                   minWidth: 'auto'
                 }}
               >
-                <ListItemIcon
-                  sx={{
-                    fontSize: "large",
-                    color: "black"
-                  }}
-                >
-                  <ExitToAppIcon/>
+                <ListItemIcon>
+                  <ExitToAppIcon
+                    sx={{
+                      fontSize: "30px",
+                      color: "black"
+                    }}
+                  />
                 </ListItemIcon>
               </ListItemButton>
             </ListItem>
