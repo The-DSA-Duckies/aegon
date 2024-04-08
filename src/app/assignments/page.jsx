@@ -60,13 +60,14 @@ export default function Page() {
           sx={{
             fontSize: '1.75rem',
             padding: '0.25em 0.5em',
-            marginTop: '2.5em',
-            marginBottom: '1em',
+            marginTop: '1.75em',
+            marginBottom: '1.25em',
             color: 'white',
             backgroundColor: '#1c65ee',
             whiteSpace: 'nowrap',
             borderRadius: '5px',
             fontWeight: 'bold',
+            textTransform: "none",
             '&:hover': { backgroundColor: '#1c65ee'}
           }}
         >

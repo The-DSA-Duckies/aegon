@@ -86,7 +86,7 @@ export default function CreateAssignment() {
           type="submit"
           sx={{
             fontSize: '2rem',
-            padding: '0.5em 1em',
+            padding: '0.4em 0.8em',
             marginTop: '10em',
             marginRight: '2em',
             color: 'white',
@@ -94,6 +94,7 @@ export default function CreateAssignment() {
             borderRadius: '5px',
             whiteSpace: 'nowrap', 
             fontWeight: 'bold',
+            textTransform: "none",
             '&:hover': { backgroundColor: '#1c65ee'}
           }}
         >

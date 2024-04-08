@@ -62,7 +62,9 @@ export default function ButtonAppBar() {
                 color: '#1c65ee',
                 whiteSpace: 'nowrap',
                 borderRadius: '5px',
-                fontWeight: 'bold'
+                fontSize: '18px',
+                fontWeight: 'bold',
+                textTransform: "none"
               }}
             >
               Home
@@ -74,7 +76,9 @@ export default function ButtonAppBar() {
                 whiteSpace: 'nowrap',
                 marginLeft: '5em',
                 borderRadius: '5px',
-                fontWeight: 'bold'
+                fontSize: '18px',
+                fontWeight: 'bold',
+                textTransform: "none"
               }}
             >
               About Us
@@ -86,7 +90,9 @@ export default function ButtonAppBar() {
                 whiteSpace: 'nowrap',
                 marginLeft: '5em',
                 borderRadius: '5px',
-                fontWeight: 'bold'
+                fontSize: '18px',
+                fontWeight: 'bold',
+                textTransform: "none"
               }}
             >
               Assignments
@@ -96,8 +102,8 @@ export default function ButtonAppBar() {
             sx={{
               display: 'flex',
               alignItems: 'center',
-              borderRadius: '5px',
-              marginLeft: 'auto'
+              marginLeft: 'auto',
+              textTransform: "none"
             }}
           >
             <Button
@@ -106,7 +112,9 @@ export default function ButtonAppBar() {
                 color: '#1c65ee',
                 whiteSpace: 'nowrap',
                 borderRadius: '5px',
-                fontWeight: 'bold'
+                fontSize: '18px',
+                fontWeight: 'bold',
+                textTransform: "none"
               }}
             >
               Login
@@ -118,9 +126,11 @@ export default function ButtonAppBar() {
                 backgroundColor: '#1c65ee',
                 whiteSpace: 'nowrap',
                 marginLeft: '5em',
+                fontSize: '18px',
                 fontWeight: 'bold',
                 borderRadius: '5px',
-                '&:hover': { backgroundColor: '#1c65ee',}
+                '&:hover': { backgroundColor: '#1c65ee',},
+                textTransform: "none"
               }}
             >
               Sign Up

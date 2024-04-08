@@ -550,6 +550,7 @@ export default function Page() {
                   whiteSpace: "nowrap",
                   fontWeight: "bold",
                   "&:hover": { backgroundColor: "#1c65ee" },
+                  textTransform: "none",
                 }}
               >
                 Update Submission
