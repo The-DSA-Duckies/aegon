@@ -463,15 +463,17 @@ export default function Page() {
               gap: "20px",
             }}
           >
-            <TextField
-              value={points}
-              onChange={handlePointsChange}
-              label="Points"
-              variant="outlined"
-              helperText={"out of " + maxPoints}
-              FormHelperTextProps={{ sx: { fontSize: "1rem" } }}
-              sx={{ width: "100px" }}
-            />
+            {studentID != -1 && (
+              <TextField
+                value={points}
+                onChange={handlePointsChange}
+                label="Points"
+                variant="outlined"
+                helperText={"out of " + maxPoints}
+                FormHelperTextProps={{ sx: { fontSize: "1rem" } }}
+                sx={{ width: "100px" }}
+              />
+            )}
             {studentID != -1 && (
               graded ? (
                 <CheckBoxOutlined
@@ -492,15 +494,17 @@ export default function Page() {
               )
             )}
           </Box>
-          <TextField
-            variant="outlined"
-            label="Comments"
-            multiline
-            rows={20}
-            value={feedback}
-            onChange={handleFeedbackChange}
-            fullWidth
-          />
+          {studentID != -1 && (
+            <TextField
+              variant="outlined"
+              label="Comments"
+              multiline
+              rows={20}
+              value={feedback}
+              onChange={handleFeedbackChange}
+              fullWidth
+            />
+          )}
           <Box
             sx={{
               display: "flex",
