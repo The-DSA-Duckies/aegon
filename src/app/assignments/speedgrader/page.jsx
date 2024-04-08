@@ -10,6 +10,8 @@ import Tab from "@mui/material/Tab";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import CheckBoxOutlineBlankOutlined from "@mui/icons-material/CheckBoxOutlineBlankOutlined";
+import CheckBoxOutlined from "@mui/icons-material/CheckBoxOutlined";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import MultipleSelect from "../../ui/studentSelector";
@@ -123,6 +125,7 @@ export default function Page() {
   const [tests, setTests] = React.useState("")
   const [page, setPage] = React.useState(0);
   const [gotSubmissions, setGotSubmissions] = React.useState(false);
+  const [graded, setGraded] = React.useState(false);
   let [selectedCodeFile, setSelectedCodeFile] = React.useState("");
   let codeFileContents = [""];
   let codeFileNames = [""];
@@ -152,23 +155,28 @@ export default function Page() {
   }, [gotSubmissions]);
 
   const handleUploadSubmission = async () => {
-    // Send in edited feedback
-    const formData = { feedback: feedback, grade: points };
-    const uri =
-      "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
-      studentID;
+    // make sure points is a float
+    if (parseFloat(points) <= 30.0 && parseFloat(points) >= -25.0) {
+      // Send in edited feedback
+      const formData = { feedback: feedback, grade: points };
+      const uri =
+        "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
+        studentID;
 
-    // const uri = "http://localhost:4000/submissions?student_id=" + studentID;
+      // const uri = "http://localhost:4000/submissions?student_id=" + studentID;
 
-    const response = await fetch(uri, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-    // const data = await response.json();
-    // console.log(data);
+      const response = await fetch(uri, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      if (response.ok) {
+        setGraded(true);
+      }
+    }
   };
 
   const handlePageChange = (event, value) => {
@@ -394,6 +402,7 @@ export default function Page() {
               setTests={setTests}
               setPoints={setPoints}
               setSelectedCodeFile={setSelectedCodeFile}
+              setGraded={setGraded}
             />
             {studentID.toString().length == 9 && (
               <Button
@@ -432,23 +441,50 @@ export default function Page() {
             onChange={handleFeedbackChange}
             fullWidth
           />
-          {studentID != -1 && (
-            <Button
-              onClick={handleUploadSubmission}
-              sx={{
-                fontSize: "1.5rem",
-                padding: "0.25em 0.75em",
-                color: "white",
-                backgroundColor: "#1c65ee",
-                borderRadius: "5px",
-                whiteSpace: "nowrap",
-                fontWeight: "bold",
-                "&:hover": { backgroundColor: "#1c65ee" },
-              }}
-            >
-              Update Submission
-            </Button>
-          )}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              gap: "20px",
+            }}
+          >
+            {studentID != -1 && (
+              <Button
+                onClick={handleUploadSubmission}
+                sx={{
+                  fontSize: "1.5rem",
+                  padding: "0.25em 0.75em",
+                  color: "white",
+                  backgroundColor: "#1c65ee",
+                  borderRadius: "5px",
+                  whiteSpace: "nowrap",
+                  fontWeight: "bold",
+                  "&:hover": { backgroundColor: "#1c65ee" },
+                }}
+              >
+                Update Submission
+              </Button>
+            )}
+            {studentID != -1 && (
+              graded ? (
+                <CheckBoxOutlined
+                  sx={{
+                      fontSize: "35px",
+                      color: "green"
+                  }}
+                />
+              ) : (
+                <CheckBoxOutlineBlankOutlined
+                  sx={{
+                      fontSize: "35px",
+                      color: "red"
+                  }}
+                />
+              )
+            )}
+          </Box>
         </Box>
       </Box>
     </Box>

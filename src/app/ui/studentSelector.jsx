@@ -25,9 +25,11 @@ export default function MultipleSelect(props) {
     if (
       data[0]["edited_feedback"] === undefined ||
       data[0]["edited_feedback"] === ""
-    ) {
+    ) 
+    {
       feedback = data[0]["feedback"];
-    } else {
+    } 
+    else {
       feedback = data[0]["edited_feedback"];
     }
     
@@ -39,8 +41,11 @@ export default function MultipleSelect(props) {
     let points = 0;
     if (data[0]["edited_grade"] === undefined) {
       points = data[0]["grade"];
-    } else {
+      props.setGraded(false);
+    }
+    else {
       points = data[0]["edited_grade"];
+      props.setGraded(true);
     }
     props.setPoints(points);
   };
