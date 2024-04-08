@@ -430,15 +430,16 @@ export default function Page() {
                 title="Open in Gradescope"
                 arrow
                 sx={{
-                    fontSize: "0.85rem",
-                    padding: "0.25em 0.5em",
-                    color: "white",
-                    backgroundColor: "#0096ff",
+                    fontSize: "0.7rem",
+                    padding: "0.15em 0.4em",
+                    color: "#0096ff",
+                    backgroundColor: "white",
                     borderRadius: '5px',
                     whiteSpace: "nowrap",
                     fontWeight: "bold",
-                    "&:hover": { backgroundColor: "#0096ff" },
+                    "&:hover": { backgroundColor: "white" },
                     gap: "5px",
+                    border: "3px solid #0096ff"
                 }}
               >
                 <IconButton
