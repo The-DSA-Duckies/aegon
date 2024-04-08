@@ -24,11 +24,6 @@ const GradescopeProject2ID = {
   Sp24: 3866728,
 };
 
-// const studentIDs = {
-//   Fa23: [204884010, 206666694, 207287544, 208447816],
-//   Sp24: [240225103],
-// };
-
 const StudentCodeReport = React.memo(function StudentCodeReport(props) {
   if (props.page === 0) {
     if (props.currCodeFile === "") {
