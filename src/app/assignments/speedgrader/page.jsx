@@ -15,7 +15,16 @@ import CheckBoxOutlined from "@mui/icons-material/CheckBoxOutlined";
 import RestorePageOutlined from "@mui/icons-material/RestorePageOutlined";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { styled } from "@mui/material/styles";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
 import MultipleSelect from "../../ui/studentSelector";
+
+const VerticalDivider = styled("div")({
+  borderLeft: "1px solid #e0e0e0", // Adjust border color as needed
+  height: "100%", // Ensure divider spans the full height of the parent container
+  margin: "0 25px 0 -25px", // Adjust margin as needed
+});
 
 const GradescopeCourseID = {
   Fa23: 576143,
@@ -372,6 +381,7 @@ export default function Page() {
           )}
         </Box>
       </Box>
+      <VerticalDivider/>
       <Box
         sx={{
           display: "flex",
@@ -416,22 +426,31 @@ export default function Page() {
               setGraded={setGraded}
             />
             {studentID.toString().length == 9 && (
-              <Button
-                onClick={gotoGradescope}
+              <Tooltip
+                title="Open in Gradescope"
+                arrow
                 sx={{
-                  fontSize: "0.85rem",
-                  padding: "0.25em 0.5em",
-                  color: "white",
-                  backgroundColor: "#fbac13",
-                  borderRadius: '5px',
-                  whiteSpace: "nowrap",
-                  fontWeight: "bold",
-                  "&:hover": { backgroundColor: "#fbac13" },
-                  gap: "5px",
+                    fontSize: "0.85rem",
+                    padding: "0.25em 0.5em",
+                    color: "white",
+                    backgroundColor: "#0096ff",
+                    borderRadius: '5px',
+                    whiteSpace: "nowrap",
+                    fontWeight: "bold",
+                    "&:hover": { backgroundColor: "#0096ff" },
+                    gap: "5px",
                 }}
               >
-                Gradescope <ExitToAppIcon/>
-              </Button>
+                <IconButton
+                  onClick={gotoGradescope}
+                >
+                  <ExitToAppIcon
+                    sx={{
+                      fontSize: "47px",
+                    }}
+                  />
+                </IconButton>
+              </Tooltip>
             )}
           </Box>
           <Box
@@ -453,24 +472,23 @@ export default function Page() {
               sx={{ width: "100px" }}
             />
             {studentID != -1 && (
-              <Button
-                onClick={revertChanges}
-                sx={{
-                  fontSize: "0.85rem",
-                  padding: "0.25em 0.5em",
-                  color: "white",
-                  backgroundColor: "red",
-                  borderRadius: '5px',
-                  whiteSpace: "nowrap",
-                  fontWeight: "bold",
-                  "&:hover": { backgroundColor: "red" },
-                  gap: "5px",
-                  marginBottom: "30px",
-                  marginLeft: "120px"
-                }}
-              >
-                Revert Changes <RestorePageOutlined/>
-              </Button>
+              graded ? (
+                <CheckBoxOutlined
+                  sx={{
+                      fontSize: "65px",
+                      color: "green",
+                      marginBottom: "30px"
+                  }}
+                />
+              ) : (
+                <CheckBoxOutlineBlankOutlined
+                  sx={{
+                      fontSize: "65px",
+                      color: "black",
+                      marginBottom: "30px"
+                  }}
+                />
+              )
             )}
           </Box>
           <TextField
@@ -492,6 +510,34 @@ export default function Page() {
             }}
           >
             {studentID != -1 && (
+              <Tooltip
+                title="Revert Changes"
+                arrow
+                sx={{
+                    fontSize: "0.7rem",
+                    padding: "0.15em 0.4em",
+                    color: "#FCAC12",
+                    backgroundColor: "white",
+                    borderRadius: '5px',
+                    whiteSpace: "nowrap",
+                    fontWeight: "bold",
+                    "&:hover": { backgroundColor: "white" },
+                    gap: "5px",
+                    border: "3px solid #FCAC12"
+                }}
+              >
+                <IconButton
+                  onClick={revertChanges}
+                >
+                  <RestorePageOutlined
+                    sx={{
+                      fontSize: "47px",
+                    }}
+                  />
+                </IconButton>
+              </Tooltip>
+            )}
+            {studentID != -1 && (
               <Button
                 onClick={handleUploadSubmission}
                 sx={{
@@ -507,23 +553,6 @@ export default function Page() {
               >
                 Update Submission
               </Button>
-            )}
-            {studentID != -1 && (
-              graded ? (
-                <CheckBoxOutlined
-                  sx={{
-                      fontSize: "35px",
-                      color: "green"
-                  }}
-                />
-              ) : (
-                <CheckBoxOutlineBlankOutlined
-                  sx={{
-                      fontSize: "35px",
-                      color: "red"
-                  }}
-                />
-              )
             )}
           </Box>
         </Box>
