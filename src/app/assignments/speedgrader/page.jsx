@@ -21,7 +21,7 @@ import IconButton from "@mui/material/IconButton";
 import MultipleSelect from "../../ui/studentSelector";
 
 const VerticalDivider = styled("div")({
-  borderLeft: "1px solid #e0e0e0", // Adjust border color as needed
+  borderLeft: "1px solid #e7e7e7", // Adjust border color as needed
   height: "100%", // Ensure divider spans the full height of the parent container
   margin: "0 25px 0 -25px", // Adjust margin as needed
 });
@@ -138,6 +138,8 @@ export default function Page() {
   const [page, setPage] = React.useState(0);
   const [gotSubmissions, setGotSubmissions] = React.useState(false);
   const [graded, setGraded] = React.useState(false);
+  const [lastSubmittedFeedback, setLastSubmittedFeedback] = React.useState("");
+  const [lastSubmittedPoints, setLastSubmittedPoints] = React.useState(0);
   let [selectedCodeFile, setSelectedCodeFile] = React.useState("");
   let codeFileContents = [""];
   let codeFileNames = [""];
@@ -170,6 +172,7 @@ export default function Page() {
     // make sure points is a number
     if (!Number.isNaN(points)) {
       // Send in edited feedback
+      setGraded(true);
       const formData = { feedback: feedback, grade: parseFloat(points), graded: true }; // convert points to float
       const uri =
         "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
@@ -188,6 +191,38 @@ export default function Page() {
       if (!response.ok) {
         setGraded(false);
       }
+      else {
+        setLastSubmittedFeedback(feedback);
+        setLastSubmittedPoints(points);
+      }
+    }
+  };
+
+  const revertChanges = async () => {
+    if (!Number.isNaN(points)) {
+      // Send in edited feedback
+      const formData = { feedback: originalFeedback, grade: parseFloat(originalPoints), graded: false }; // convert points to float
+      const uri =
+        "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
+        studentID;
+
+      // const uri = "http://localhost:4000/submissions?student_id=" + studentID;
+
+      const response = await fetch(uri, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      if (response.ok) {
+        setGraded(false);
+        setFeedback(originalFeedback);
+        setPoints(originalPoints);
+        setLastSubmittedFeedback(originalFeedback);
+        setLastSubmittedPoints(originalPoints);
+      }
     }
   };
 
@@ -205,12 +240,30 @@ export default function Page() {
           parseFloat(event.target.value) >= -25.0)
       ) {
         setPoints(event.target.value);
+        if (lastSubmittedFeedback != "" &&
+          feedback === lastSubmittedFeedback &&
+          parseFloat(event.target.value).toFixed(2) == parseFloat(lastSubmittedPoints).toFixed(2)
+        ) {
+          setGraded(true);
+        }
+        else {
+          setGraded(false);
+        }
       }
     }
   };
 
   const handleFeedbackChange = (event) => {
     setFeedback(event.target.value);
+    if (lastSubmittedFeedback != "" &&
+      event.target.value === lastSubmittedFeedback &&
+      parseFloat(points).toFixed(2) == parseFloat(lastSubmittedPoints).toFixed(2)
+    ) {
+      setGraded(true);
+    }
+    else {
+      setGraded(false);
+    }
   };
 
   const handleCodeFileChange = (event) => {
@@ -273,12 +326,6 @@ export default function Page() {
       "?view=files";
 
     window.open(gradescopeLink, "_blank");
-  };
-
-  const revertChanges = () => {
-    setFeedback(originalFeedback);
-    setPoints(originalPoints);
-    handleUploadSubmission();
   };
 
   return (
@@ -417,11 +464,13 @@ export default function Page() {
               studentDict={studentDict}
               setFeedback={setFeedback}
               setOriginalFeedback={setOriginalFeedback}
+              setLastSubmittedFeedback={setLastSubmittedFeedback}
               setCode={setCode}
               setReport={setReport}
               setTests={setTests}
               setPoints={setPoints}
               setOriginalPoints={setOriginalPoints}
+              setLastSubmittedPoints={setLastSubmittedPoints}
               setSelectedCodeFile={setSelectedCodeFile}
               setGraded={setGraded}
             />
@@ -476,21 +525,31 @@ export default function Page() {
             )}
             {studentID != -1 && (
               graded ? (
-                <CheckBoxOutlined
-                  sx={{
-                      fontSize: "65px",
-                      color: "green",
-                      marginBottom: "30px"
-                  }}
-                />
+                <Tooltip
+                  title="Changes are saved!"
+                  arrow
+                >
+                  <CheckBoxOutlined
+                    sx={{
+                        fontSize: "75px",
+                        color: "#7af587",
+                        marginBottom: "30px"
+                    }}
+                  />
+                </Tooltip>
               ) : (
-                <CheckBoxOutlineBlankOutlined
-                  sx={{
-                      fontSize: "65px",
-                      color: "black",
-                      marginBottom: "30px"
-                  }}
-                />
+                <Tooltip
+                  title="Update before exiting!"
+                  arrow
+                >
+                  <CheckBoxOutlineBlankOutlined
+                    sx={{
+                        fontSize: "75px",
+                        color: "#c0c0c0",
+                        marginBottom: "30px"
+                    }}
+                  />
+                </Tooltip>
               )
             )}
           </Box>

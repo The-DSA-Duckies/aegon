@@ -26,16 +26,20 @@ export default function MultipleSelect(props) {
     ) 
     {
       props.setFeedback(data[0]["feedback"]);
+      props.setLastSubmittedFeedback(data[0]["feedback"]);
     } 
     else {
       props.setFeedback(data[0]["edited_feedback"]);
+      props.setLastSubmittedFeedback(data[0]["edited_feedback"]);
     }
 
     if (data[0]["edited_grade"] === undefined) {
       props.setPoints(data[0]["grade"]);
+      props.setLastSubmittedPoints(data[0]["grade"]);
     }
     else {
       props.setPoints(data[0]["edited_grade"]);
+      props.setLastSubmittedPoints(data[0]["edited_grade"]);
     }
 
     if (data[0]["graded_status"] === undefined) {
@@ -55,7 +59,7 @@ export default function MultipleSelect(props) {
 
   return (
     <div>
-      <FormControl sx={{ width: 220 }}>
+      <FormControl sx={{ width: 280 }}>
         <InputLabel id="Gradescope-student-ID-label">
           Gradescope Student ID
         </InputLabel>
