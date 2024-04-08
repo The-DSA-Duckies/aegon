@@ -12,6 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import CheckBoxOutlineBlankOutlined from "@mui/icons-material/CheckBoxOutlineBlankOutlined";
 import CheckBoxOutlined from "@mui/icons-material/CheckBoxOutlined";
+import RestorePageOutlined from "@mui/icons-material/RestorePageOutlined";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import MultipleSelect from "../../ui/studentSelector";
@@ -118,8 +119,10 @@ export default function Page() {
   const [submissionData, setSubmissionData] = React.useState([]);
   const [index, setIndex] = React.useState(0);
   const [points, setPoints] = React.useState("");
+  const [originalPoints, setOriginalPoints] = React.useState(0);
   const [maxPoints, setMaxPoints] = React.useState(30);
   const [feedback, setFeedback] = React.useState("Comments");
+  const [originalFeedback, setOriginalFeedback] = React.useState("");
   const [code, setCode] = React.useState("");
   const [report, setReport] = React.useState("");
   const [tests, setTests] = React.useState("")
@@ -155,10 +158,10 @@ export default function Page() {
   }, [gotSubmissions]);
 
   const handleUploadSubmission = async () => {
-    // make sure points is a float
-    if (parseFloat(points) <= 30.0 && parseFloat(points) >= -25.0) {
+    // make sure points is a number
+    if (!Number.isNaN(points)) {
       // Send in edited feedback
-      const formData = { feedback: feedback, grade: points };
+      const formData = { feedback: feedback, grade: parseFloat(points) }; // convert points to float
       const uri =
         "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
         studentID;
@@ -261,6 +264,13 @@ export default function Page() {
       "?view=files";
 
     window.open(gradescopeLink, "_blank");
+  };
+
+  const revertChanges = () => {
+    setGraded(false);
+    setFeedback(originalFeedback);
+    setPoints(originalPoints);
+    handleUploadSubmission();
   };
 
   return (
@@ -397,10 +407,12 @@ export default function Page() {
               studentIDs={studentIDs}
               studentDict={studentDict}
               setFeedback={setFeedback}
+              setOriginalFeedback={setOriginalFeedback}
               setCode={setCode}
               setReport={setReport}
               setTests={setTests}
               setPoints={setPoints}
+              setOriginalPoints={setOriginalPoints}
               setSelectedCodeFile={setSelectedCodeFile}
               setGraded={setGraded}
             />
@@ -423,15 +435,45 @@ export default function Page() {
               </Button>
             )}
           </Box>
-          <TextField
-            value={points}
-            onChange={handlePointsChange}
-            label="Points"
-            variant="outlined"
-            helperText={"out of " + maxPoints}
-            FormHelperTextProps={{ sx: { fontSize: "1rem" } }}
-            sx={{ width: "100px" }}
-          />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              gap: "20px",
+            }}
+          >
+            <TextField
+              value={points}
+              onChange={handlePointsChange}
+              label="Points"
+              variant="outlined"
+              helperText={"out of " + maxPoints}
+              FormHelperTextProps={{ sx: { fontSize: "1rem" } }}
+              sx={{ width: "100px" }}
+            />
+            {studentID != -1 && (
+              <Button
+                onClick={revertChanges}
+                sx={{
+                  fontSize: "0.85rem",
+                  padding: "0.25em 0.5em",
+                  color: "white",
+                  backgroundColor: "red",
+                  borderRadius: '5px',
+                  whiteSpace: "nowrap",
+                  fontWeight: "bold",
+                  "&:hover": { backgroundColor: "red" },
+                  gap: "5px",
+                  marginBottom: "30px",
+                  marginLeft: "120px"
+                }}
+              >
+                Revert Changes <RestorePageOutlined/>
+              </Button>
+            )}
+          </Box>
           <TextField
             variant="outlined"
             label="Comments"

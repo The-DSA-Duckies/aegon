@@ -21,38 +21,37 @@ export default function MultipleSelect(props) {
     const response = await fetch(uri);
     const data = await response.json();
 
-    let feedback = "";
     if (
       data[0]["edited_feedback"] === undefined ||
       data[0]["edited_feedback"] === ""
     ) 
     {
-      feedback = data[0]["feedback"];
+      props.setFeedback(data[0]["feedback"]);
     } 
     else {
-      feedback = data[0]["edited_feedback"];
+      props.setFeedback(data[0]["edited_feedback"]);
+    }
+
+    if (data[0]["edited_grade"] === undefined) {
+      props.setPoints(data[0]["grade"]);
+      props.setGraded(false);
+    }
+    else {
+      props.setPoints(data[0]["edited_grade"]);
+      props.setGraded(true);
     }
     
-    props.setFeedback(feedback);
+    props.setOriginalFeedback(data[0]["feedback"]);
+    props.setOriginalPoints(data[0]["grade"]);
     props.setReport(data[0]["report"]);
     props.setCode(data[0]["code"]);
     props.setTests(data[0]["tests"])
     props.setSelectedCodeFile("");
-    let points = 0;
-    if (data[0]["edited_grade"] === undefined) {
-      points = data[0]["grade"];
-      props.setGraded(false);
-    }
-    else {
-      points = data[0]["edited_grade"];
-      props.setGraded(true);
-    }
-    props.setPoints(points);
   };
 
   return (
     <div>
-      <FormControl sx={{ width: 250 }}>
+      <FormControl sx={{ width: 220 }}>
         <InputLabel id="Gradescope-student-ID-label">
           Gradescope Student ID
         </InputLabel>
