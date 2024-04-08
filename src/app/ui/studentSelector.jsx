@@ -42,7 +42,7 @@ export default function MultipleSelect(props) {
     } else {
       points = data[0]["edited_grade"];
     }
-    props.setPoints(String(points));
+    props.setPoints(points);
   };
 
   return (
