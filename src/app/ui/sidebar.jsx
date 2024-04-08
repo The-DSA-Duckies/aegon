@@ -105,7 +105,7 @@ export default function Sidebar(props) {
                   height="48px"
                 />
               </IconButton>
-              <h4 style={{ margin: "auto 0" }}>Guppy Grader</h4>
+              <h4 style={{ margin: "auto 0" }}>Guppie Grader</h4>
               <IconButton onClick={handleDrawerAction} sx={{ color: "black" }}>
                 <MenuOpenIcon />
               </IconButton>

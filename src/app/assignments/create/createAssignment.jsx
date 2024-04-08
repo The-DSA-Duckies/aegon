@@ -91,6 +91,7 @@ export default function CreateAssignment() {
             marginRight: '2em',
             color: 'white',
             backgroundColor: '#1c65ee',
+            borderRadius: '5px',
             whiteSpace: 'nowrap', 
             fontWeight: 'bold',
             '&:hover': { backgroundColor: '#1c65ee'}

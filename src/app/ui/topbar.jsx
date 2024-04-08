@@ -61,6 +61,7 @@ export default function ButtonAppBar() {
               sx={{
                 color: '#1c65ee',
                 whiteSpace: 'nowrap',
+                borderRadius: '5px',
                 fontWeight: 'bold'
               }}
             >
@@ -72,6 +73,7 @@ export default function ButtonAppBar() {
                 color: '#1c65ee',
                 whiteSpace: 'nowrap',
                 marginLeft: '5em',
+                borderRadius: '5px',
                 fontWeight: 'bold'
               }}
             >
@@ -83,6 +85,7 @@ export default function ButtonAppBar() {
                 color: '#1c65ee',
                 whiteSpace: 'nowrap',
                 marginLeft: '5em',
+                borderRadius: '5px',
                 fontWeight: 'bold'
               }}
             >
@@ -93,6 +96,7 @@ export default function ButtonAppBar() {
             sx={{
               display: 'flex',
               alignItems: 'center',
+              borderRadius: '5px',
               marginLeft: 'auto'
             }}
           >
@@ -101,6 +105,7 @@ export default function ButtonAppBar() {
               sx={{
                 color: '#1c65ee',
                 whiteSpace: 'nowrap',
+                borderRadius: '5px',
                 fontWeight: 'bold'
               }}
             >
@@ -114,6 +119,7 @@ export default function ButtonAppBar() {
                 whiteSpace: 'nowrap',
                 marginLeft: '5em',
                 fontWeight: 'bold',
+                borderRadius: '5px',
                 '&:hover': { backgroundColor: '#1c65ee',}
               }}
             >

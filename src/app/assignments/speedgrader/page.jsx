@@ -408,6 +408,7 @@ export default function Page() {
                   padding: "0.25em 0.5em",
                   color: "white",
                   backgroundColor: "#fbac13",
+                  borderRadius: '5px',
                   whiteSpace: "nowrap",
                   fontWeight: "bold",
                   "&:hover": { backgroundColor: "#fbac13" },
