@@ -410,7 +410,7 @@ export default function Page() {
                   gap: "5px",
                 }}
               >
-                Gradescope <ExitToAppIcon />
+                Gradescope <ExitToAppIcon/>
               </Button>
             )}
           </Box>

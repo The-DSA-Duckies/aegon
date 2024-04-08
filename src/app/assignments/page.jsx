@@ -113,7 +113,7 @@ export default function Page() {
                 <ListItemIcon>
                   <ExitToAppIcon
                     sx={{
-                      fontSize: "30px",
+                      fontSize: "35px",
                       color: "black"
                     }}
                   />
