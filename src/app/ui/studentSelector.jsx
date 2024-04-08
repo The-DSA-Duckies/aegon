@@ -30,10 +30,11 @@ export default function MultipleSelect(props) {
     } else {
       feedback = data[0]["edited_feedback"];
     }
-    // const feedback = data[0]["feedback"];
+    
     props.setFeedback(feedback);
     props.setReport(data[0]["report"]);
     props.setCode(data[0]["code"]);
+    props.setTests(data[0]["tests"])
     props.setSelectedCodeFile("");
     let points = 0;
     if (data[0]["edited_grade"] === undefined) {

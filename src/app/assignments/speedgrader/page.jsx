@@ -30,7 +30,6 @@ const GradescopeProject2ID = {
 // };
 
 const StudentCodeReport = React.memo(function StudentCodeReport(props) {
-  console.log("Rerendering StudentCodeReport");
   if (props.page === 0) {
     if (props.currCodeFile === "") {
       return (
@@ -126,6 +125,7 @@ export default function Page() {
   const [feedback, setFeedback] = React.useState("Comments");
   const [code, setCode] = React.useState("");
   const [report, setReport] = React.useState("");
+  const [tests, setTests] = React.useState("")
   const [page, setPage] = React.useState(0);
   const [gotSubmissions, setGotSubmissions] = React.useState(false);
   let [selectedCodeFile, setSelectedCodeFile] = React.useState("");
@@ -206,24 +206,43 @@ export default function Page() {
     codeFileContents = [""];
     codeFileNames = [""];
 
-    codeFileContents = code.split("CUR FILE == ");
-    codeFileContents.shift();
+    if (code != "NO CODE FOUND") {
+      codeFileContents = code.split("CUR FILE == ");
+      codeFileContents.shift(); // take out empty entry
 
-    for (let i = 0; i < codeFileContents.length; i++) {
-      const indexOfNewline = codeFileContents[i].indexOf("\n");
-      codeFileNames.push(codeFileContents[i].substring(0, indexOfNewline));
-      codeFileContents[i] = codeFileContents[i].substring(indexOfNewline + 1);
+      for (let i = 0; i < codeFileContents.length; i++) { // adds normal code files
+        const indexOfNewline = codeFileContents[i].indexOf("\n");
+        codeFileNames.push(codeFileContents[i].substring(0, indexOfNewline));
+        codeFileContents[i] = codeFileContents[i].substring(indexOfNewline + 1);
+      }
+
+      codeFileNames.shift(); // take out empty entry
     }
-    codeFileNames.shift();
+
+    // adds test.cpp
+    if (tests != "NO TESTS FOUND") {
+      codeFileNames.push("test.cpp");
+      codeFileContents.push(tests)
+    }
 
     if (selectedCodeFile == "") {
       selectedCodeFile = codeFileNames[0];
     }
     currCodeFile = getCodeFile();
-    return true;
+
+    if (currCodeFile === "// NO CODE FOUND") {
+      return false;
+    }
+    else {
+      return true;
+    }
   };
 
   const getCodeFile = () => {
+    if (codeFileNames[0] === "") {
+      return "// NO CODE FOUND";
+    }
+
     const codeFileIndex = codeFileNames.indexOf(selectedCodeFile);
     return codeFileContents[codeFileIndex];
   };
@@ -277,7 +296,7 @@ export default function Page() {
           >
             Project 2
           </Typography>
-          {page === 0 && code != "" && parseCode() && (
+          {page === 0 && (code != "" || tests != "") && parseCode() && (
             <Select
               value={selectedCodeFile}
               onChange={handleCodeFileChange}
@@ -377,6 +396,7 @@ export default function Page() {
               setFeedback={setFeedback}
               setCode={setCode}
               setReport={setReport}
+              setTests={setTests}
               setPoints={setPoints}
               setSelectedCodeFile={setSelectedCodeFile}
             />
