@@ -139,7 +139,7 @@ export default function Page() {
   const [gotSubmissions, setGotSubmissions] = React.useState(false);
   const [graded, setGraded] = React.useState(false);
   const [lastSubmittedFeedback, setLastSubmittedFeedback] = React.useState("");
-  const [lastSubmittedPoints, setLastSubmittedPoints] = React.useState(0);
+  const [lastSubmittedPoints, setLastSubmittedPoints] = React.useState(-30);
   let [selectedCodeFile, setSelectedCodeFile] = React.useState("");
   let codeFileContents = [""];
   let codeFileNames = [""];

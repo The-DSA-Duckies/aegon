@@ -26,7 +26,7 @@ export default function MultipleSelect(props) {
     ) 
     {
       props.setFeedback(data[0]["feedback"]);
-      props.setLastSubmittedFeedback(data[0]["feedback"]);
+      props.setLastSubmittedFeedback("");
     } 
     else {
       props.setFeedback(data[0]["edited_feedback"]);
@@ -35,7 +35,7 @@ export default function MultipleSelect(props) {
 
     if (data[0]["edited_grade"] === undefined) {
       props.setPoints(data[0]["grade"]);
-      props.setLastSubmittedPoints(data[0]["grade"]);
+      props.setLastSubmittedPoints(-30);
     }
     else {
       props.setPoints(data[0]["edited_grade"]);
