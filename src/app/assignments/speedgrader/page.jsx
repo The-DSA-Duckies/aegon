@@ -161,7 +161,7 @@ export default function Page() {
     // make sure points is a number
     if (!Number.isNaN(points)) {
       // Send in edited feedback
-      const formData = { feedback: feedback, grade: parseFloat(points) }; // convert points to float
+      const formData = { feedback: feedback, grade: parseFloat(points), graded: true }; // convert points to float
       const uri =
         "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
         studentID;
@@ -176,8 +176,8 @@ export default function Page() {
         body: JSON.stringify(formData),
       });
       
-      if (response.ok) {
-        setGraded(true);
+      if (!response.ok) {
+        setGraded(false);
       }
     }
   };
@@ -267,7 +267,6 @@ export default function Page() {
   };
 
   const revertChanges = () => {
-    setGraded(false);
     setFeedback(originalFeedback);
     setPoints(originalPoints);
     handleUploadSubmission();

@@ -11,7 +11,6 @@ export default function MultipleSelect(props) {
   const theme = useTheme();
 
   const handleChange = async (event) => {
-    //TODO: This is so broken right now
     const studentID = event.target.value;
     props.setStudentID(studentID);
     const uri =
@@ -34,11 +33,16 @@ export default function MultipleSelect(props) {
 
     if (data[0]["edited_grade"] === undefined) {
       props.setPoints(data[0]["grade"]);
-      props.setGraded(false);
     }
     else {
       props.setPoints(data[0]["edited_grade"]);
-      props.setGraded(true);
+    }
+
+    if (data[0]["graded_status"] === undefined) {
+      props.setGraded(false);
+    }
+    else {
+      props.setGraded(data[0]["graded_status"]);
     }
     
     props.setOriginalFeedback(data[0]["feedback"]);
