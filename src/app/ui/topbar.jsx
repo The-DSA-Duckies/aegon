@@ -63,7 +63,10 @@ export default function Topbar(props) {
               sx={{
                 color: '#1c65ee',
                 whiteSpace: 'nowrap',
-                fontWeight: 'bold'
+                borderRadius: '5px',
+                fontSize: '18px',
+                fontWeight: 'bold',
+                textTransform: "none"
               }}
             >
               Home
@@ -74,7 +77,10 @@ export default function Topbar(props) {
                 color: '#1c65ee',
                 whiteSpace: 'nowrap',
                 marginLeft: '5em',
-                fontWeight: 'bold'
+                borderRadius: '5px',
+                fontSize: '18px',
+                fontWeight: 'bold',
+                textTransform: "none"
               }}
             >
               About Us
@@ -85,7 +91,10 @@ export default function Topbar(props) {
                 color: '#1c65ee',
                 whiteSpace: 'nowrap',
                 marginLeft: '5em',
-                fontWeight: 'bold'
+                borderRadius: '5px',
+                fontSize: '18px',
+                fontWeight: 'bold',
+                textTransform: "none"
               }}
             >
               Assignments
@@ -95,7 +104,8 @@ export default function Topbar(props) {
             sx={{
               display: 'flex',
               alignItems: 'center',
-              marginLeft: 'auto'
+              marginLeft: 'auto',
+              textTransform: "none"
             }}
           >
           {!session && !loading ? (
@@ -105,7 +115,10 @@ export default function Topbar(props) {
                 sx={{
                   color: '#1c65ee',
                   whiteSpace: 'nowrap',
-                  fontWeight: 'bold'
+                  borderRadius: '5px',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  textTransform: "none"
                 }}
               >
                 Login
@@ -117,8 +130,11 @@ export default function Topbar(props) {
                   backgroundColor: '#1c65ee',
                   whiteSpace: 'nowrap',
                   marginLeft: '5em',
+                  fontSize: '18px',
                   fontWeight: 'bold',
-                  '&:hover': { backgroundColor: '#1c65ee',}
+                  borderRadius: '5px',
+                  '&:hover': { backgroundColor: '#1c65ee',},
+                  textTransform: "none"
                 }}
               >
                 Sign Up

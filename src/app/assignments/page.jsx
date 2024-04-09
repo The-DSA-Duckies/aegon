@@ -60,12 +60,14 @@ export default function Page() {
           sx={{
             fontSize: '1.75rem',
             padding: '0.25em 0.5em',
-            marginTop: '1.5em',
-            marginBottom: '1.5em',
+            marginTop: '1.75em',
+            marginBottom: '1.25em',
             color: 'white',
             backgroundColor: '#1c65ee',
             whiteSpace: 'nowrap',
+            borderRadius: '5px',
             fontWeight: 'bold',
+            textTransform: "none",
             '&:hover': { backgroundColor: '#1c65ee'}
           }}
         >
@@ -95,14 +97,12 @@ export default function Page() {
                 </Typography>
               />
               <ListItemText 
-                primary= <Typography
-                  variant="h4"
-                  sx={{
-
-                  }}
-                >
-                  Status: <span style={{ color: '#fbac13' }}>Graded by LLM</span>
-                </Typography>
+                primary= 
+                  <Typography
+                    variant="h4"
+                  >
+                    Status: <span style={{ color: '#fbac13' }}>Graded by LLM</span>
+                  </Typography>
               />
               <ListItemButton
                 onClick={() => handleNavigate('/assignments/speedgrader')}
@@ -111,13 +111,13 @@ export default function Page() {
                   minWidth: 'auto'
                 }}
               >
-                <ListItemIcon
-                  sx={{
-                    fontSize: "large",
-                    color: "black"
-                  }}
-                >
-                  <ExitToAppIcon/>
+                <ListItemIcon>
+                  <ExitToAppIcon
+                    sx={{
+                      fontSize: "35px",
+                      color: "black"
+                    }}
+                  />
                 </ListItemIcon>
               </ListItemButton>
             </ListItem>

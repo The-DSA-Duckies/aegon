@@ -105,9 +105,14 @@ export default function Sidebar(props) {
                   height="48px"
                 />
               </IconButton>
-              <h4 style={{ margin: "auto 0" }}>Guppy Grader</h4>
+              <h4 style={{ margin: "0 -5px 0 0" }}>Guppie Grader</h4>
               <IconButton onClick={handleDrawerAction} sx={{ color: "black" }}>
-                <MenuOpenIcon />
+                <MenuOpenIcon 
+                  sx={{
+                      fontSize: "30px",
+                      color: "black"
+                  }}
+                />
               </IconButton>
             </Stack>
           </DrawerHeader>
@@ -122,8 +127,13 @@ export default function Sidebar(props) {
                   height="48px"
                 />
               </IconButton>
-              <IconButton onClick={handleDrawerAction} sx={{ color: "black" }}>
-                <MenuIcon />
+              <IconButton onClick={handleDrawerAction} sx={{ color: "black", justifyContent: "center" }}>
+                <MenuIcon 
+                  sx={{
+                      fontSize: "30px",
+                      color: "black"
+                  }}
+                />
               </IconButton>
             </Stack>
           </DrawerHeader>
@@ -141,7 +151,7 @@ export default function Sidebar(props) {
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                px: 2.5
               }}
             >
               <ListItemIcon
@@ -149,11 +159,15 @@ export default function Sidebar(props) {
                 sx={{
                   minWidth: 0,
                   mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                  color: "black",
+                  justifyContent: "center"
                 }}
               >
-                <AssignmentIcon />
+                <AssignmentIcon
+                  sx={{
+                      fontSize: "30px",
+                      color: "black"
+                  }}
+                />
               </ListItemIcon>
               <ListItemText
                 primary={"Assignments"}
@@ -180,30 +194,33 @@ export default function Sidebar(props) {
                       opacity: 0,
                     }}
                   >
-                    <AssignmentIcon />
+                    <AssignmentIcon
+                      sx={{
+                        fontSize: "30px",
+                        color: "black"
+                      }}
+                    />
                   </ListItemIcon>
                   <ListItemText
                     primary={text}
                     sx={{
                       opacity: open ? 1 : 0,
-                      color: "black",
-                      ":hover": {
-                        textDecoration: "underline",
-                        color: "#1165EF",
-                        fontWeight: "bold",
-                      },
+                      color: "black"
                     }}
                   />
                   <ListItemIcon
                     sx={{
                       minWidth: 0,
-                      mr: open ? 1 : "auto",
                       justifyContent: "center",
-                      opacity: open ? 1 : 0,
-                      color: "#1165EF",
+                      opacity: open ? 1 : 0
                     }}
                   >
-                    <ArrowForwardIcon />
+                    <ArrowForwardIcon
+                      sx={{
+                        fontSize: "30px",
+                        color: "#1165EF"
+                      }}
+                    />
                   </ListItemIcon>
                 </ListItemButton>
               </ListItem>
@@ -223,18 +240,22 @@ export default function Sidebar(props) {
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                px: 2.5
               }}
             >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                  color: "#1165EF",
+                  justifyContent: "center"
                 }}
               >
-                <AddCircleRoundedIcon />
+                <AddCircleRoundedIcon
+                  sx={{
+                      fontSize: "30px",
+                      color: "#1165EF"
+                  }}
+                />
               </ListItemIcon>
               <ListItemText
                 primary={"Create Assignment"}
@@ -248,18 +269,22 @@ export default function Sidebar(props) {
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                px: 2.5
               }}
             >
               <ListItemIcon
                 sx={{
                   minWidth: 0,
                   mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                  color: "black",
+                  justifyContent: "center"
                 }}
               >
-                <InfoOutlinedIcon />
+                <InfoOutlinedIcon 
+                  sx={{
+                      fontSize: "30px",
+                      color: "black"
+                  }}
+                />
               </ListItemIcon>
               <ListItemText
                 primary={"About Us"}
