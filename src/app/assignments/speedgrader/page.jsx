@@ -496,7 +496,7 @@ export default function Page() {
                 >
                   <ExitToAppIcon
                     sx={{
-                      fontSize: "47px",
+                      fontSize: "40px",
                     }}
                   />
                 </IconButton>
@@ -531,7 +531,7 @@ export default function Page() {
                 >
                   <CheckBoxOutlined
                     sx={{
-                        fontSize: "75px",
+                        fontSize: "60px",
                         color: "#7af587",
                         marginBottom: "30px"
                     }}
@@ -544,7 +544,7 @@ export default function Page() {
                 >
                   <CheckBoxOutlineBlankOutlined
                     sx={{
-                        fontSize: "75px",
+                        fontSize: "60px",
                         color: "#c0c0c0",
                         marginBottom: "30px"
                     }}
@@ -595,7 +595,7 @@ export default function Page() {
                 >
                   <RestorePageOutlined
                     sx={{
-                      fontSize: "47px",
+                      fontSize: "40px",
                     }}
                   />
                 </IconButton>
