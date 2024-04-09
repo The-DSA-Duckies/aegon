@@ -48,9 +48,15 @@ export default function MultipleSelect(props) {
     else {
       props.setGraded(data[0]["graded_status"]);
     }
+
+    if (data[0]["grade"] === null) {
+      props.setOriginalPoints(0);
+    }
+    else {
+      props.setOriginalPoints(data[0]["grade"]);
+    }
     
     props.setOriginalFeedback(data[0]["feedback"]);
-    props.setOriginalPoints(data[0]["grade"]);
     props.setReport(data[0]["report"]);
     props.setCode(data[0]["code"]);
     props.setTests(data[0]["tests"])
