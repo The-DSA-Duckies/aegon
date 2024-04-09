@@ -11,7 +11,6 @@ export default function MultipleSelect(props) {
   const theme = useTheme();
 
   const handleChange = async (event) => {
-    //TODO: This is so broken right now
     const studentID = event.target.value;
     props.setStudentID(studentID);
     const uri =
@@ -21,32 +20,46 @@ export default function MultipleSelect(props) {
     const response = await fetch(uri);
     const data = await response.json();
 
-    let feedback = "";
     if (
       data[0]["edited_feedback"] === undefined ||
       data[0]["edited_feedback"] === ""
-    ) {
-      feedback = data[0]["feedback"];
-    } else {
-      feedback = data[0]["edited_feedback"];
+    ) 
+    {
+      props.setFeedback(data[0]["feedback"]);
+      props.setLastSubmittedFeedback("");
+    } 
+    else {
+      props.setFeedback(data[0]["edited_feedback"]);
+      props.setLastSubmittedFeedback(data[0]["edited_feedback"]);
     }
-    // const feedback = data[0]["feedback"];
-    props.setFeedback(feedback);
+
+    if (data[0]["edited_grade"] === undefined) {
+      props.setPoints(data[0]["grade"]);
+      props.setLastSubmittedPoints(-30);
+    }
+    else {
+      props.setPoints(data[0]["edited_grade"]);
+      props.setLastSubmittedPoints(data[0]["edited_grade"]);
+    }
+
+    if (data[0]["graded_status"] === undefined) {
+      props.setGraded(false);
+    }
+    else {
+      props.setGraded(data[0]["graded_status"]);
+    }
+    
+    props.setOriginalFeedback(data[0]["feedback"]);
+    props.setOriginalPoints(data[0]["grade"]);
     props.setReport(data[0]["report"]);
     props.setCode(data[0]["code"]);
+    props.setTests(data[0]["tests"])
     props.setSelectedCodeFile("");
-    let points = 0;
-    if (data[0]["edited_grade"] === undefined) {
-      points = data[0]["grade"];
-    } else {
-      points = data[0]["edited_grade"];
-    }
-    props.setPoints(String(points));
   };
 
   return (
     <div>
-      <FormControl sx={{ width: 250 }}>
+      <FormControl sx={{ width: 280 }}>
         <InputLabel id="Gradescope-student-ID-label">
           Gradescope Student ID
         </InputLabel>

@@ -10,9 +10,21 @@ import Tab from "@mui/material/Tab";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import CheckBoxOutlineBlankOutlined from "@mui/icons-material/CheckBoxOutlineBlankOutlined";
+import CheckBoxOutlined from "@mui/icons-material/CheckBoxOutlined";
+import RestorePageOutlined from "@mui/icons-material/RestorePageOutlined";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { styled } from "@mui/material/styles";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
 import MultipleSelect from "../../ui/studentSelector";
+
+const VerticalDivider = styled("div")({
+  borderLeft: "1px solid #e7e7e7", // Adjust border color as needed
+  height: "100%", // Ensure divider spans the full height of the parent container
+  margin: "0 25px 0 -25px", // Adjust margin as needed
+});
 
 const GradescopeCourseID = {
   Fa23: 576143,
@@ -24,13 +36,7 @@ const GradescopeProject2ID = {
   Sp24: 3866728,
 };
 
-// const studentIDs = {
-//   Fa23: [204884010, 206666694, 207287544, 208447816],
-//   Sp24: [240225103],
-// };
-
 const StudentCodeReport = React.memo(function StudentCodeReport(props) {
-  console.log("Rerendering StudentCodeReport");
   if (props.page === 0) {
     if (props.currCodeFile === "") {
       return (
@@ -122,12 +128,18 @@ export default function Page() {
   const [submissionData, setSubmissionData] = React.useState([]);
   const [index, setIndex] = React.useState(0);
   const [points, setPoints] = React.useState("");
+  const [originalPoints, setOriginalPoints] = React.useState(0);
   const [maxPoints, setMaxPoints] = React.useState(30);
   const [feedback, setFeedback] = React.useState("Comments");
+  const [originalFeedback, setOriginalFeedback] = React.useState("");
   const [code, setCode] = React.useState("");
   const [report, setReport] = React.useState("");
+  const [tests, setTests] = React.useState("")
   const [page, setPage] = React.useState(0);
   const [gotSubmissions, setGotSubmissions] = React.useState(false);
+  const [graded, setGraded] = React.useState(false);
+  const [lastSubmittedFeedback, setLastSubmittedFeedback] = React.useState("");
+  const [lastSubmittedPoints, setLastSubmittedPoints] = React.useState(-30);
   let [selectedCodeFile, setSelectedCodeFile] = React.useState("");
   let codeFileContents = [""];
   let codeFileNames = [""];
@@ -157,23 +169,61 @@ export default function Page() {
   }, [gotSubmissions]);
 
   const handleUploadSubmission = async () => {
-    // Send in edited feedback
-    const formData = { feedback: feedback, grade: points };
-    const uri =
-      "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
-      studentID;
+    // make sure points is a number
+    if (!Number.isNaN(points)) {
+      // Send in edited feedback
+      setGraded(true);
+      const formData = { feedback: feedback, grade: parseFloat(points), graded: true }; // convert points to float
+      const uri =
+        "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
+        studentID;
 
-    // const uri = "http://localhost:4000/submissions?student_id=" + studentID;
+      // const uri = "http://localhost:4000/submissions?student_id=" + studentID;
 
-    const response = await fetch(uri, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-    // const data = await response.json();
-    // console.log(data);
+      const response = await fetch(uri, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      if (!response.ok) {
+        setGraded(false);
+      }
+      else {
+        setLastSubmittedFeedback(feedback);
+        setLastSubmittedPoints(points);
+      }
+    }
+  };
+
+  const revertChanges = async () => {
+    if (!Number.isNaN(points)) {
+      // Send in edited feedback
+      const formData = { feedback: originalFeedback, grade: parseFloat(originalPoints), graded: false }; // convert points to float
+      const uri =
+        "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
+        studentID;
+
+      // const uri = "http://localhost:4000/submissions?student_id=" + studentID;
+
+      const response = await fetch(uri, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      if (response.ok) {
+        setGraded(false);
+        setFeedback(originalFeedback);
+        setPoints(originalPoints);
+        setLastSubmittedFeedback(originalFeedback);
+        setLastSubmittedPoints(originalPoints);
+      }
+    }
   };
 
   const handlePageChange = (event, value) => {
@@ -190,12 +240,30 @@ export default function Page() {
           parseFloat(event.target.value) >= -25.0)
       ) {
         setPoints(event.target.value);
+        if (lastSubmittedFeedback != "" &&
+          feedback === lastSubmittedFeedback &&
+          parseFloat(event.target.value).toFixed(2) == parseFloat(lastSubmittedPoints).toFixed(2)
+        ) {
+          setGraded(true);
+        }
+        else {
+          setGraded(false);
+        }
       }
     }
   };
 
   const handleFeedbackChange = (event) => {
     setFeedback(event.target.value);
+    if (lastSubmittedFeedback != "" &&
+      event.target.value === lastSubmittedFeedback &&
+      parseFloat(points).toFixed(2) == parseFloat(lastSubmittedPoints).toFixed(2)
+    ) {
+      setGraded(true);
+    }
+    else {
+      setGraded(false);
+    }
   };
 
   const handleCodeFileChange = (event) => {
@@ -206,24 +274,43 @@ export default function Page() {
     codeFileContents = [""];
     codeFileNames = [""];
 
-    codeFileContents = code.split("CUR FILE == ");
-    codeFileContents.shift();
+    if (code != "NO CODE FOUND") {
+      codeFileContents = code.split("CUR FILE == ");
+      codeFileContents.shift(); // take out empty entry
 
-    for (let i = 0; i < codeFileContents.length; i++) {
-      const indexOfNewline = codeFileContents[i].indexOf("\n");
-      codeFileNames.push(codeFileContents[i].substring(0, indexOfNewline));
-      codeFileContents[i] = codeFileContents[i].substring(indexOfNewline + 1);
+      for (let i = 0; i < codeFileContents.length; i++) { // adds normal code files
+        const indexOfNewline = codeFileContents[i].indexOf("\n");
+        codeFileNames.push(codeFileContents[i].substring(0, indexOfNewline));
+        codeFileContents[i] = codeFileContents[i].substring(indexOfNewline + 1);
+      }
+
+      codeFileNames.shift(); // take out empty entry
     }
-    codeFileNames.shift();
+
+    // adds test.cpp
+    if (tests != "NO TESTS FOUND") {
+      codeFileNames.push("test.cpp");
+      codeFileContents.push(tests)
+    }
 
     if (selectedCodeFile == "") {
       selectedCodeFile = codeFileNames[0];
     }
     currCodeFile = getCodeFile();
-    return true;
+
+    if (currCodeFile === "// NO CODE FOUND") {
+      return false;
+    }
+    else {
+      return true;
+    }
   };
 
   const getCodeFile = () => {
+    if (codeFileNames[0] === "") {
+      return "// NO CODE FOUND";
+    }
+
     const codeFileIndex = codeFileNames.indexOf(selectedCodeFile);
     return codeFileContents[codeFileIndex];
   };
@@ -277,7 +364,7 @@ export default function Page() {
           >
             Project 2
           </Typography>
-          {page === 0 && code != "" && parseCode() && (
+          {page === 0 && (code != "" || tests != "") && parseCode() && (
             <Select
               value={selectedCodeFile}
               onChange={handleCodeFileChange}
@@ -341,6 +428,7 @@ export default function Page() {
           )}
         </Box>
       </Box>
+      <VerticalDivider/>
       <Box
         sx={{
           display: "flex",
@@ -375,64 +463,163 @@ export default function Page() {
               studentIDs={studentIDs}
               studentDict={studentDict}
               setFeedback={setFeedback}
+              setOriginalFeedback={setOriginalFeedback}
+              setLastSubmittedFeedback={setLastSubmittedFeedback}
               setCode={setCode}
               setReport={setReport}
+              setTests={setTests}
               setPoints={setPoints}
+              setOriginalPoints={setOriginalPoints}
+              setLastSubmittedPoints={setLastSubmittedPoints}
               setSelectedCodeFile={setSelectedCodeFile}
+              setGraded={setGraded}
             />
             {studentID.toString().length == 9 && (
-              <Button
-                onClick={gotoGradescope}
+              <Tooltip
+                title="Open in Gradescope"
+                arrow
                 sx={{
-                  fontSize: "0.85rem",
-                  padding: "0.25em 0.5em",
-                  color: "white",
-                  backgroundColor: "#fbac13",
-                  whiteSpace: "nowrap",
-                  fontWeight: "bold",
-                  "&:hover": { backgroundColor: "#fbac13" },
-                  gap: "5px",
+                    fontSize: "0.7rem",
+                    padding: "0.15em 0.4em",
+                    color: "#0096ff",
+                    backgroundColor: "white",
+                    borderRadius: '5px',
+                    whiteSpace: "nowrap",
+                    fontWeight: "bold",
+                    "&:hover": { backgroundColor: "white" },
+                    gap: "5px",
+                    border: "3px solid #0096ff"
                 }}
               >
-                Gradescope <ExitToAppIcon />
+                <IconButton
+                  onClick={gotoGradescope}
+                >
+                  <ExitToAppIcon
+                    sx={{
+                      fontSize: "40px",
+                    }}
+                  />
+                </IconButton>
+              </Tooltip>
+            )}
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              gap: "20px",
+            }}
+          >
+            {studentID != -1 && (
+              <TextField
+                value={points}
+                onChange={handlePointsChange}
+                label="Points"
+                variant="outlined"
+                helperText={"out of " + maxPoints}
+                FormHelperTextProps={{ sx: { fontSize: "1rem" } }}
+                sx={{ width: "100px" }}
+              />
+            )}
+            {studentID != -1 && (
+              graded ? (
+                <Tooltip
+                  title="Changes are saved!"
+                  arrow
+                >
+                  <CheckBoxOutlined
+                    sx={{
+                        fontSize: "60px",
+                        color: "#7af587",
+                        marginBottom: "30px"
+                    }}
+                  />
+                </Tooltip>
+              ) : (
+                <Tooltip
+                  title="Update before exiting!"
+                  arrow
+                >
+                  <CheckBoxOutlineBlankOutlined
+                    sx={{
+                        fontSize: "60px",
+                        color: "#c0c0c0",
+                        marginBottom: "30px"
+                    }}
+                  />
+                </Tooltip>
+              )
+            )}
+          </Box>
+          {studentID != -1 && (
+            <TextField
+              variant="outlined"
+              label="Comments"
+              multiline
+              rows={20}
+              value={feedback}
+              onChange={handleFeedbackChange}
+              fullWidth
+            />
+          )}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              gap: "20px",
+            }}
+          >
+            {studentID != -1 && (
+              <Tooltip
+                title="Revert Changes"
+                arrow
+                sx={{
+                    fontSize: "0.7rem",
+                    padding: "0.15em 0.4em",
+                    color: "#FCAC12",
+                    backgroundColor: "white",
+                    borderRadius: '5px',
+                    whiteSpace: "nowrap",
+                    fontWeight: "bold",
+                    "&:hover": { backgroundColor: "white" },
+                    gap: "5px",
+                    border: "3px solid #FCAC12"
+                }}
+              >
+                <IconButton
+                  onClick={revertChanges}
+                >
+                  <RestorePageOutlined
+                    sx={{
+                      fontSize: "40px",
+                    }}
+                  />
+                </IconButton>
+              </Tooltip>
+            )}
+            {studentID != -1 && (
+              <Button
+                onClick={handleUploadSubmission}
+                sx={{
+                  fontSize: "1.5rem",
+                  padding: "0.25em 0.75em",
+                  color: "white",
+                  backgroundColor: "#1c65ee",
+                  borderRadius: "5px",
+                  whiteSpace: "nowrap",
+                  fontWeight: "bold",
+                  "&:hover": { backgroundColor: "#1c65ee" },
+                  textTransform: "none",
+                }}
+              >
+                Update Submission
               </Button>
             )}
           </Box>
-          <TextField
-            value={points}
-            onChange={handlePointsChange}
-            label="Points"
-            variant="outlined"
-            helperText={"out of " + maxPoints}
-            FormHelperTextProps={{ sx: { fontSize: "1rem" } }}
-            sx={{ width: "100px" }}
-          />
-          <TextField
-            variant="outlined"
-            label="Comments"
-            multiline
-            rows={20}
-            value={feedback}
-            onChange={handleFeedbackChange}
-            fullWidth
-          />
-          {studentID != -1 && (
-            <Button
-              onClick={handleUploadSubmission}
-              sx={{
-                fontSize: "1.5rem",
-                padding: "0.25em 0.75em",
-                color: "white",
-                backgroundColor: "#1c65ee",
-                borderRadius: "5px",
-                whiteSpace: "nowrap",
-                fontWeight: "bold",
-                "&:hover": { backgroundColor: "#1c65ee" },
-              }}
-            >
-              Update Submission
-            </Button>
-          )}
         </Box>
       </Box>
     </Box>

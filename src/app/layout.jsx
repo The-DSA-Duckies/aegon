@@ -5,8 +5,8 @@ import Topbar from "./ui/topbar"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Guppie Graders",
-  description: "Automatic grading for DSA TAs",
+  title: "Guppie Grader",
+  description: "LLM grading for DSA TAs"
 };
 
 export default function RootLayout({ children }) {
