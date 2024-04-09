@@ -25,8 +25,8 @@ export default function Page() {
                 <Image 
                     src="/signup_ducks.png"
                     alt="Sign up duck image"
-                    width={500}
-                    height={700}
+                    width={600}
+                    height={450}
                 />
             </Box>
             <Box
@@ -54,7 +54,7 @@ export default function Page() {
                         marginRight: '15em'
                     }}
                 >
-                    Already have an account? <Link href="/sign-in">Sign in</Link>
+                    Already have an account? <Link href="/sign-in" style={{color: "#1165EF"}}>Sign in</Link>
                 </Typography>
                 <Box 
                     sx={{

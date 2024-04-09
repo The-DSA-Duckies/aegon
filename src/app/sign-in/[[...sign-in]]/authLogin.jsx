@@ -49,17 +49,20 @@ export default function AuthLogin(props) {
         <Button
             onClick={handleSubmit}
             sx={{
-                fontSize: '2rem',
-                padding: '0.5em 1em',
-                marginTop: '1em',
-                color: 'white',
-                backgroundColor: '#1c65ee',
-                whiteSpace: 'nowrap',
-                fontWeight: 'bold',
-                '&:hover': { backgroundColor: '#1c65ee'}
+                fontSize: "2rem",
+                padding: "0.1em 0.7em",
+                color: "#1c65ee",
+                backgroundColor: "white",
+                borderRadius: "5px",
+                whiteSpace: "nowrap",
+                fontWeight: "bold",
+                "&:hover": { backgroundColor: "white" },
+                textTransform: "none",
+                marginTop: "40px",
+                border: "3px solid #1c65ee"
             }}
         >
-            Login
+            Sign In
         </Button>
     );
 }

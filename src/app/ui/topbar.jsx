@@ -115,10 +115,13 @@ export default function Topbar(props) {
                 sx={{
                   color: '#1c65ee',
                   whiteSpace: 'nowrap',
+                  padding: '0.4em 0.7em',
                   borderRadius: '5px',
                   fontSize: '18px',
                   fontWeight: 'bold',
-                  textTransform: "none"
+                  textTransform: "none",
+                  '&:hover': { backgroundColor: 'white',},
+                  border: "3px solid #1c65ee"
                 }}
               >
                 Login
@@ -128,16 +131,17 @@ export default function Topbar(props) {
                 sx={{
                   color: 'white',
                   backgroundColor: '#1c65ee',
+                  padding: '0.5em 0.4em',
                   whiteSpace: 'nowrap',
-                  marginLeft: '5em',
+                  marginLeft: '2em',
                   fontSize: '18px',
                   fontWeight: 'bold',
                   borderRadius: '5px',
                   '&:hover': { backgroundColor: '#1c65ee',},
-                  textTransform: "none"
+                  textTransform: "none",
                 }}
               >
-                Sign Up
+                Register
               </Button>
             </>
           ) : (
@@ -146,9 +150,11 @@ export default function Topbar(props) {
                 variant="h6"
                 component="div"
                 sx={{
-                  color: 'black',
+                  color: '#1c65ee',
                   whiteSpace: 'nowrap',
-                  marginRight: '1em'
+                  marginRight: '2em',
+                  fontSize: '18px',
+                  fontWeight: 'bold'
                 }}
               >
                 Your Profile

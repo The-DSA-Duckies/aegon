@@ -100,17 +100,19 @@ export default function DoSignup() {
             <Button
               type="submit"
               sx={{
-                fontSize: '2rem',
-                padding: '0.5em 1em',
-                marginTop: '1em',
-                color: 'white',
-                backgroundColor: '#1c65ee',
-                whiteSpace: 'nowrap',
-                fontWeight: 'bold',
-                '&:hover': { backgroundColor: '#1c65ee'}
+                fontSize: "2rem",
+                padding: "0.2em 0.7em",
+                color: "white",
+                backgroundColor: "#1c65ee",
+                borderRadius: "5px",
+                whiteSpace: "nowrap",
+                fontWeight: "bold",
+                "&:hover": { backgroundColor: "#1c65ee" },
+                textTransform: "none",
+                marginTop: "40px"
               }}
             >
-              Register
+              Sign Up
             </Button>
       {errorMessage && (
         <Typography

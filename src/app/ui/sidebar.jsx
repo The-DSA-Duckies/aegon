@@ -304,13 +304,13 @@ export default function Sidebar(props) {
                 px: 2,
                 display: "flex",
                 flexDirection: "row",
-                gap: open ? "20px" : "0px"
+                gap: open ? "22px" : "0px",
+                marginLeft: open? "3px" : "0px",
               }}
             >
               <UserButton afterSignOutUrl='/'
                 sx={{
                   minWidth: 0,
-                  margin: open ? 3 : "auto",
                   justifyContent: "center",
                   color: "black",
                 }}

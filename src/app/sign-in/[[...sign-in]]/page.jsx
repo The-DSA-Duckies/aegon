@@ -42,7 +42,7 @@ export default function Page() {
                     variant="h2"
                     sx={{
                         marginRight: '7.5em',
-                        color: '#1d63d4'
+                        color: '#1c65ee'
                     }}
                 >
                     Login
@@ -54,14 +54,14 @@ export default function Page() {
                         marginRight: '15em'
                     }}
                 >
-                    Don't have an account? <Link href="/sign-up">Sign up</Link>
+                    Don't have an account? <Link href="/sign-up" style={{color: "#1165EF"}}>Sign up</Link>
                 </Typography>
                 <Box 
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        justifyContent: 'center'
+                        justifyContent: 'center',
                     }}
                 >
                     <DoLogin/>
