@@ -55,7 +55,7 @@ export default function DoSignup() {
               Username<span style={{ color: 'red' }}>*</span>
             </Typography>
             <TextField 
-              id="outlined-required"
+              id="enter-user"
               value={userValue}
               onChange={handleUserChange}
               fullWidth
@@ -72,7 +72,7 @@ export default function DoSignup() {
               Password<span style={{ color: 'red' }}>*</span>
             </Typography>
             <TextField 
-              id="outlined-required"
+              id="enter-pass"
               type="password"
               value={passValue}
               onChange={handlePassChange}
@@ -90,7 +90,7 @@ export default function DoSignup() {
               Confirm Password<span style={{ color: 'red' }}>*</span>
             </Typography>
             <TextField
-              id="outlined-required"
+              id="enter-pass-confirm"
               type="password"
               value={passConfirmValue}
               onChange={handlePassConfirmChange}

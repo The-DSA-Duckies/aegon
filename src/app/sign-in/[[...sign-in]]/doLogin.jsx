@@ -39,7 +39,7 @@ export default function DoLogin() {
         Username<span style={{ color: 'red' }}>*</span>
       </Typography>
       <TextField 
-        id="outlined-required"
+        id="login-user"
         value={userValue}
         onChange={handleUserChange}
         fullWidth
@@ -56,7 +56,7 @@ export default function DoLogin() {
         Password<span style={{ color: 'red' }}>*</span>
       </Typography>
       <TextField 
-        id="outlined-required"
+        id="login-pass"
         type="password"
         value={passValue}
         onChange={handlePassChange}
