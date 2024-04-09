@@ -6,10 +6,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useRouter } from 'next/navigation';
+import { UserButton, useSession } from '@clerk/nextjs';
 
 /* current topbar height is 100px */
 
-export default function ButtonAppBar() {
+export default function Topbar(props) {
+  const { session, loading } = useSession();
   const router = useRouter();
 
   const handleNavigate = (path) => {
@@ -106,38 +108,64 @@ export default function ButtonAppBar() {
               textTransform: "none"
             }}
           >
-            <Button
-              onClick={() => handleNavigate('/login')}
-              sx={{
-                color: '#1c65ee',
-                whiteSpace: 'nowrap',
-                borderRadius: '5px',
-                fontSize: '18px',
-                fontWeight: 'bold',
-                textTransform: "none"
-              }}
-            >
-              Login
-            </Button>
-            <Button
-              onClick={() => handleNavigate('/login/signup')}
-              sx={{
-                color: 'white',
-                backgroundColor: '#1c65ee',
-                whiteSpace: 'nowrap',
-                marginLeft: '5em',
-                fontSize: '18px',
-                fontWeight: 'bold',
-                borderRadius: '5px',
-                '&:hover': { backgroundColor: '#1c65ee',},
-                textTransform: "none"
-              }}
-            >
-              Sign Up
-            </Button>
+          {!session && !loading ? (
+            <>
+              <Button
+                onClick={() => handleNavigate('/sign-in')}
+                sx={{
+                  color: '#1c65ee',
+                  whiteSpace: 'nowrap',
+                  padding: '0.4em 0.7em',
+                  borderRadius: '5px',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  textTransform: "none",
+                  '&:hover': { backgroundColor: 'white',},
+                  border: "3px solid #1c65ee"
+                }}
+              >
+                Login
+              </Button>
+              <Button
+                onClick={() => handleNavigate('/sign-up')}
+                sx={{
+                  color: 'white',
+                  backgroundColor: '#1c65ee',
+                  padding: '0.5em 0.4em',
+                  whiteSpace: 'nowrap',
+                  marginLeft: '2em',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  borderRadius: '5px',
+                  '&:hover': { backgroundColor: '#1c65ee',},
+                  textTransform: "none",
+                }}
+              >
+                Register
+              </Button>
+            </>
+          ) : (
+            <>
+              <Typography 
+                variant="h6"
+                component="div"
+                sx={{
+                  color: '#1c65ee',
+                  whiteSpace: 'nowrap',
+                  marginRight: '2em',
+                  fontSize: '18px',
+                  fontWeight: 'bold'
+                }}
+              >
+                Your Profile
+              </Typography>
+              <UserButton afterSignOutUrl='/'/>
+            </>
+          )}
           </Box>
         </Toolbar>
       </AppBar>
+      <Box component="main">{props.children}</Box>
     </Box>
   );
 }

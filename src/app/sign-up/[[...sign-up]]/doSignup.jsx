@@ -8,10 +8,6 @@ import { useRouter } from 'next/navigation';
 export default function DoSignup() {
   const router = useRouter();
 
-  const handleNavigate = (path) => {
-    router.push(path);
-  };
-
     // State to manage the value of the input field
   const [userValue, setUserValue] = useState('');
   const [passValue, setPassValue] = useState('');
@@ -77,6 +73,7 @@ export default function DoSignup() {
             </Typography>
             <TextField 
               id="outlined-required"
+              type="password"
               value={passValue}
               onChange={handlePassChange}
               fullWidth
@@ -94,6 +91,7 @@ export default function DoSignup() {
             </Typography>
             <TextField
               id="outlined-required"
+              type="password"
               value={passConfirmValue}
               onChange={handlePassConfirmChange}
               fullWidth
@@ -102,17 +100,19 @@ export default function DoSignup() {
             <Button
               type="submit"
               sx={{
-                fontSize: '2rem',
-                padding: '0.5em 1em',
-                marginTop: '1em',
-                color: 'white',
-                backgroundColor: '#1c65ee',
-                whiteSpace: 'nowrap',
-                fontWeight: 'bold',
-                '&:hover': { backgroundColor: '#1c65ee'}
+                fontSize: "2rem",
+                padding: "0.2em 0.7em",
+                color: "white",
+                backgroundColor: "#1c65ee",
+                borderRadius: "5px",
+                whiteSpace: "nowrap",
+                fontWeight: "bold",
+                "&:hover": { backgroundColor: "#1c65ee" },
+                textTransform: "none",
+                marginTop: "40px"
               }}
             >
-              Register
+              Sign Up
             </Button>
       {errorMessage && (
         <Typography

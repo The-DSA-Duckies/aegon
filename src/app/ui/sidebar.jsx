@@ -11,7 +11,6 @@ import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {
   Divider,
@@ -22,6 +21,7 @@ import {
   Stack,
 } from "@mui/material";
 import { useRouter } from 'next/navigation';
+import { UserButton } from "@clerk/nextjs";
 
 const drawerWidth = 240; // // sidebar width when closed is 65px
 
@@ -297,32 +297,29 @@ export default function Sidebar(props) {
         {/* Profile Page */}
         <List>
           <ListItem key={"Profile"} disablePadding sx={{ display: "block" }}>
-            <ListItemButton
+            <Box
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
-                px: 2.5
+                px: 2,
+                display: "flex",
+                flexDirection: "row",
+                gap: open ? "22px" : "0px",
+                marginLeft: open? "3px" : "0px",
               }}
             >
-              <ListItemIcon
+              <UserButton afterSignOutUrl='/'
                 sx={{
                   minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center"
+                  justifyContent: "center",
+                  color: "black",
                 }}
-              >
-                <AccountCircleIcon
-                  sx={{
-                      fontSize: "30px",
-                      color: "black"
-                  }}
-                />
-              </ListItemIcon>
+              />
               <ListItemText
                 primary={"Your Profile"}
                 sx={{ opacity: open ? 1 : 0, color: "black" }}
               />
-            </ListItemButton>
+            </Box>
           </ListItem>
         </List>
       </Drawer>

@@ -2,11 +2,11 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
-import { TopBarLayout } from "./layout";
+import Topbar from './ui/topbar'
 
 export default function Home() {
   return (
-    <TopBarLayout>
+    <Topbar>
       <Box 
         sx={{
           display: 'flex',
@@ -63,6 +63,6 @@ export default function Home() {
           />
         </Box>
       </Box>
-    </TopBarLayout>
+    </Topbar>
   );
 }

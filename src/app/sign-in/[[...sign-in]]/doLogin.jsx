@@ -1,9 +1,9 @@
 'use client'
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { useRouter } from 'next/navigation';
+import AuthLogin from './authLogin';
 
 export default function DoLogin() {
   const router = useRouter();
@@ -26,23 +26,8 @@ export default function DoLogin() {
     setPassValue(event.target.value);
   };
 
-    // Function to handle form submission
-  const handleSubmit = (event) => {
-      event.preventDefault();
-      console.log('User value: ', userValue);
-      console.log('Pass value: ', passValue);
-        
-        // temporary hard-coded login account that doesn't actually restrict anything
-      if (userValue == "test" && passValue == "12345678") {
-          handleNavigate('/assignments');
-      }
-      else {
-          setErrorMessage('Incorrect username or password. Please try again.');
-      }
-  };
-
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
       <Typography 
         variant="h4"
         sx={{
@@ -72,35 +57,27 @@ export default function DoLogin() {
       </Typography>
       <TextField 
         id="outlined-required"
+        type="password"
         value={passValue}
         onChange={handlePassChange}
         fullWidth
         required
       />
-      <Button
-        type="submit"
-        sx={{
-          fontSize: '2rem',
-          padding: '0.5em 1em',
-          marginTop: '1em',
-          color: 'white',
-          backgroundColor: '#1c65ee',
-          whiteSpace: 'nowrap',
-          fontWeight: 'bold',
-          '&:hover': { backgroundColor: '#1c65ee'}
-        }}
-      >
-        Login
-      </Button>
+      <AuthLogin
+        userValue={userValue}
+        passValue={passValue}
+        setErrorMessage={setErrorMessage}
+        handleNavigate={handleNavigate}
+      />
       {errorMessage && (
         <Typography 
           variant="body1"
-          color="red"
+          color={errorMessage == "complete" ? "green" : "red"}
           sx={{ paddingTop: '1em' }}
         >
           {errorMessage}
         </Typography>
       )}
-    </form>
+    </div>
   );
 }
