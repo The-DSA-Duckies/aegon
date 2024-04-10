@@ -494,34 +494,6 @@ export default function Page() {
               setSelectedCodeFile={setSelectedCodeFile}
               setGraded={setGraded}
             />
-            {studentID.toString().length == 9 && (
-              <Tooltip
-                title="Open in Gradescope"
-                arrow
-                sx={{
-                    fontSize: "0.7rem",
-                    padding: "0.15em 0.4em",
-                    color: "#0096ff",
-                    backgroundColor: "white",
-                    borderRadius: '5px',
-                    whiteSpace: "nowrap",
-                    fontWeight: "bold",
-                    "&:hover": { backgroundColor: "white" },
-                    gap: "5px",
-                    border: "3px solid #0096ff"
-                }}
-              >
-                <IconButton
-                  onClick={gotoGradescope}
-                >
-                  <ExitToAppIcon
-                    sx={{
-                      fontSize: "40px",
-                    }}
-                  />
-                </IconButton>
-              </Tooltip>
-            )}
           </Box>
           <Box
             sx={{
@@ -529,7 +501,7 @@ export default function Page() {
               flexDirection: "row",
               justifyContent: "flex-start",
               alignItems: "center",
-              gap: "20px",
+              gap: "40px",
             }}
           >
             {studentID != -1 && (
@@ -551,9 +523,9 @@ export default function Page() {
                 >
                   <CheckBoxOutlined
                     sx={{
-                        fontSize: "60px",
+                        fontSize: "65px",
                         color: "#7af587",
-                        marginBottom: "30px"
+                        marginBottom: "20px"
                     }}
                   />
                 </Tooltip>
@@ -564,13 +536,42 @@ export default function Page() {
                 >
                   <CheckBoxOutlineBlankOutlined
                     sx={{
-                        fontSize: "60px",
+                        fontSize: "65px",
                         color: "#c0c0c0",
-                        marginBottom: "30px"
+                        marginBottom: "20px"
                     }}
                   />
                 </Tooltip>
               )
+            )}
+            {studentID.toString().length == 9 && (
+              <Tooltip
+                title="Open in Gradescope"
+                arrow
+                sx={{
+                    fontSize: "0.7rem",
+                    padding: "0.15em 0.4em",
+                    color: "#0096ff",
+                    backgroundColor: "white",
+                    borderRadius: '5px',
+                    whiteSpace: "nowrap",
+                    fontWeight: "bold",
+                    "&:hover": { backgroundColor: "white" },
+                    gap: "5px",
+                    border: "3px solid #0096ff",
+                    marginBottom: "20px"
+                }}
+              >
+                <IconButton
+                  onClick={gotoGradescope}
+                >
+                  <ExitToAppIcon
+                    sx={{
+                      fontSize: "40px",
+                    }}
+                  />
+                </IconButton>
+              </Tooltip>
             )}
           </Box>
           {studentID != -1 && (

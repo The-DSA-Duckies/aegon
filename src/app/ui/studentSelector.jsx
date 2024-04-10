@@ -86,29 +86,7 @@ export default function MultipleSelect(props) {
 
   return (
     <div>
-      <Tooltip
-        title="Previous Student"
-        arrow
-        sx={{
-            color: "#0096ff",
-            backgroundColor: "white",
-            borderRadius: '5px',
-            whiteSpace: "nowrap",
-            fontWeight: "bold",
-            "&:hover": { backgroundColor: "white" }
-        }}
-      >
-        <IconButton
-          onClick={handleBack}
-        >
-          <ArrowBack
-            sx={{
-              fontSize: "40px",
-            }}
-          />
-        </IconButton>
-      </Tooltip>
-      <FormControl sx={{ width: 220}}>
+      <FormControl sx={{ width: props.studentID != -1 ? 300 : 400 }}>
         <InputLabel id="Gradescope-student-ID-label">
           Gradescope Student ID
         </InputLabel>
@@ -129,28 +107,58 @@ export default function MultipleSelect(props) {
           ))}
         </Select>
       </FormControl>
-      <Tooltip
-                title="Next Student"
-                arrow
-                sx={{
-                    color: "#0096ff",
-                    backgroundColor: "white",
-                    borderRadius: '5px',
-                    whiteSpace: "nowrap",
-                    fontWeight: "bold",
-                    "&:hover": { backgroundColor: "white" }
-                }}
-              >
-                <IconButton
-                  onClick={handleFront}
-                >
-                  <ArrowForward
-                    sx={{
-                      fontSize: "40px",
-                    }}
-                  />
-                </IconButton>
-              </Tooltip>
+      {props.studentID != -1 && (
+        <Tooltip
+          title="Previous Student"
+          arrow
+          sx={{
+              color: "#0096ff",
+              backgroundColor: "white",
+              borderRadius: '5px',
+              whiteSpace: "nowrap",
+              fontWeight: "bold",
+              "&:hover": { backgroundColor: "white" },
+              marginTop: "5px",
+              marginLeft: "10px"
+          }}
+        >
+          <IconButton
+            onClick={handleBack}
+          >
+            <ArrowBack
+              sx={{
+                fontSize: "30px",
+                
+              }}
+            />
+          </IconButton>
+        </Tooltip>
+      )}
+      {props.studentID != -1 && (
+        <Tooltip
+          title="Next Student"
+          arrow
+          sx={{
+              color: "#0096ff",
+              backgroundColor: "white",
+              borderRadius: '5px',
+              whiteSpace: "nowrap",
+              fontWeight: "bold",
+              "&:hover": { backgroundColor: "white" },
+              marginTop: "5px"
+          }}
+        >
+          <IconButton
+            onClick={handleFront}
+          >
+            <ArrowForward
+              sx={{
+                fontSize: "30px",
+              }}
+            />
+          </IconButton>
+        </Tooltip>
+      )}
     </div>
   );
 }
