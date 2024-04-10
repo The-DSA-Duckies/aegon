@@ -11,8 +11,7 @@ import ArrowForward from "@mui/icons-material/ArrowForward";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 
 export default function MultipleSelect(props) {
-  const [anchorElm, setAnchorElm] = React.useState(null); // work on this with ChatGPT
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [selectedIndex, setSelectedIndex] = React.useState(-1);
 
   const handleStudentChange = async (selectedStudentID) => {
     props.setStudentID(selectedStudentID);
@@ -67,7 +66,7 @@ export default function MultipleSelect(props) {
   };
 
   const handleBack = () => {
-    const newIndex = selectedIndex === 0 ? props.studentIDs.length - 1 : selectedIndex - 1;
+    const newIndex = selectedIndex <= 0 ? props.studentIDs.length - 1 : selectedIndex - 1;
     setSelectedIndex(newIndex);
     handleStudentChange(props.studentIDs[newIndex]);
   };
@@ -86,7 +85,7 @@ export default function MultipleSelect(props) {
 
   return (
     <div>
-      <FormControl sx={{ width: props.studentID != -1 ? 300 : 400 }}>
+      <FormControl sx={{ width: 300 }}>
         <InputLabel id="Gradescope-student-ID-label">
           Gradescope Student ID
         </InputLabel>
@@ -107,58 +106,54 @@ export default function MultipleSelect(props) {
           ))}
         </Select>
       </FormControl>
-      {props.studentID != -1 && (
-        <Tooltip
-          title="Previous Student"
-          arrow
-          sx={{
-              color: "#0096ff",
-              backgroundColor: "white",
-              borderRadius: '5px',
-              whiteSpace: "nowrap",
-              fontWeight: "bold",
-              "&:hover": { backgroundColor: "white" },
-              marginTop: "5px",
-              marginLeft: "10px"
-          }}
+      <Tooltip
+        title={selectedIndex > 0 ? "Previous Student" : "Last Student"}
+        arrow
+        sx={{
+            color: "#0096ff",
+            backgroundColor: "white",
+            borderRadius: '5px',
+            whiteSpace: "nowrap",
+            fontWeight: "bold",
+            "&:hover": { backgroundColor: "white" },
+            marginTop: "5px",
+            marginLeft: "10px"
+        }}
+      >
+        <IconButton
+          onClick={handleBack}
         >
-          <IconButton
-            onClick={handleBack}
-          >
-            <ArrowBack
-              sx={{
-                fontSize: "30px",
-                
-              }}
-            />
-          </IconButton>
-        </Tooltip>
-      )}
-      {props.studentID != -1 && (
-        <Tooltip
-          title="Next Student"
-          arrow
-          sx={{
-              color: "#0096ff",
-              backgroundColor: "white",
-              borderRadius: '5px',
-              whiteSpace: "nowrap",
-              fontWeight: "bold",
-              "&:hover": { backgroundColor: "white" },
-              marginTop: "5px"
-          }}
+          <ArrowBack
+            sx={{
+              fontSize: "30px",
+              
+            }}
+          />
+        </IconButton>
+      </Tooltip>
+      <Tooltip
+        title={(selectedIndex != -1 && selectedIndex != props.studentIDs.length - 1) ? "Next Student" : "First Student"}
+        arrow
+        sx={{
+            color: "#0096ff",
+            backgroundColor: "white",
+            borderRadius: '5px',
+            whiteSpace: "nowrap",
+            fontWeight: "bold",
+            "&:hover": { backgroundColor: "white" },
+            marginTop: "5px"
+        }}
+      >
+        <IconButton
+          onClick={handleFront}
         >
-          <IconButton
-            onClick={handleFront}
-          >
-            <ArrowForward
-              sx={{
-                fontSize: "30px",
-              }}
-            />
-          </IconButton>
-        </Tooltip>
-      )}
+          <ArrowForward
+            sx={{
+              fontSize: "30px",
+            }}
+          />
+        </IconButton>
+      </Tooltip>
     </div>
   );
 }
