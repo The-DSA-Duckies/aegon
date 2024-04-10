@@ -501,7 +501,7 @@ export default function Page() {
               flexDirection: "row",
               justifyContent: "flex-start",
               alignItems: "center",
-              gap: "40px",
+              gap: "20px",
             }}
           >
             {studentID != -1 && (

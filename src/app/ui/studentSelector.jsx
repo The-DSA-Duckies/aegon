@@ -85,7 +85,7 @@ export default function MultipleSelect(props) {
 
   return (
     <div>
-      <FormControl sx={{ width: 300 }}>
+      <FormControl sx={{ width: 260 }}>
         <InputLabel id="Gradescope-student-ID-label">
           Gradescope Student ID
         </InputLabel>
