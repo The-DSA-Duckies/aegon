@@ -1,21 +1,24 @@
 "use client";
 import * as React from "react";
-import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import ArrowForward from "@mui/icons-material/ArrowForward";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 
 export default function MultipleSelect(props) {
-  const theme = useTheme();
+  const [anchorElm, setAnchorElm] = React.useState(null); // work on this with ChatGPT
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  const handleChange = async (event) => {
-    const studentID = event.target.value;
-    props.setStudentID(studentID);
+  const handleStudentChange = async (selectedStudentID) => {
+    props.setStudentID(selectedStudentID);
     const uri =
       "https://shielded-fortress-17570-3a3570bb5dfa.herokuapp.com/submissions?student_id=" +
-      studentID;
+      selectedStudentID;
     // const uri = "http://localhost:4000/submissions?student_id=" + studentID;
     const response = await fetch(uri);
     const data = await response.json();
@@ -63,30 +66,91 @@ export default function MultipleSelect(props) {
     props.setSelectedCodeFile("");
   };
 
+  const handleBack = () => {
+    const newIndex = selectedIndex === 0 ? props.studentIDs.length - 1 : selectedIndex - 1;
+    setSelectedIndex(newIndex);
+    handleStudentChange(props.studentIDs[newIndex]);
+  };
+
+  const handleFront = () => {
+    const newIndex = selectedIndex === props.studentIDs.length - 1 ? 0 : selectedIndex + 1;
+    setSelectedIndex(newIndex);
+    handleStudentChange(props.studentIDs[newIndex]);
+  };
+
+  const handleSelect = (event) => {
+    const newIndex = props.studentIDs.findIndex((studentID) => studentID === event.target.value);
+    setSelectedIndex(newIndex);
+    handleStudentChange(event.target.value);
+  }
+
   return (
     <div>
-      <FormControl sx={{ width: 280 }}>
+      <Tooltip
+        title="Previous Student"
+        arrow
+        sx={{
+            color: "#0096ff",
+            backgroundColor: "white",
+            borderRadius: '5px',
+            whiteSpace: "nowrap",
+            fontWeight: "bold",
+            "&:hover": { backgroundColor: "white" }
+        }}
+      >
+        <IconButton
+          onClick={handleBack}
+        >
+          <ArrowBack
+            sx={{
+              fontSize: "40px",
+            }}
+          />
+        </IconButton>
+      </Tooltip>
+      <FormControl sx={{ width: 220}}>
         <InputLabel id="Gradescope-student-ID-label">
           Gradescope Student ID
         </InputLabel>
         <Select
           labelId="Gradescope-student-ID-label"
           id="Gradescope-student-ID-select"
-          // value={props.personName}
-          onChange={handleChange}
+          value={props.studentID}
+          onChange={handleSelect}
           input={<OutlinedInput label="Gradescope Student ID" />}
         >
-          {props.studentIDs.map((studentID) => (
+          {props.studentIDs.map((studentID, index) => (
             <MenuItem
-              key={studentID}
+              key={index}
               value={studentID}
-              // style={getStyles(name, props.personName, theme)}
             >
               {props.studentDict[studentID]}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
+      <Tooltip
+                title="Next Student"
+                arrow
+                sx={{
+                    color: "#0096ff",
+                    backgroundColor: "white",
+                    borderRadius: '5px',
+                    whiteSpace: "nowrap",
+                    fontWeight: "bold",
+                    "&:hover": { backgroundColor: "white" }
+                }}
+              >
+                <IconButton
+                  onClick={handleFront}
+                >
+                  <ArrowForward
+                    sx={{
+                      fontSize: "40px",
+                    }}
+                  />
+                </IconButton>
+              </Tooltip>
     </div>
   );
 }

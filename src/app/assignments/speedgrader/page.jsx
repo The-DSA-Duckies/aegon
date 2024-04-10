@@ -479,6 +479,7 @@ export default function Page() {
           >
             <MultipleSelect
               setStudentID={setStudentID}
+              studentID={studentID}
               studentIDs={studentIDs}
               studentDict={studentDict}
               setFeedback={setFeedback}
