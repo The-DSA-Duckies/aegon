@@ -116,9 +116,29 @@ const StudentCodeReport = React.memo(function StudentCodeReport(props) {
 });
 
 const comparator = (a, b) => {
-  if (a["studentid_ta"] > b["studentid_ta"]) return 1;
-  else if (a["studentid_ta"] < b["studentid_ta"]) return -1;
-  else return 0;
+  const aSplit = a["studentid_ta"].split(" - ");
+  const bSplit = b["studentid_ta"].split(" - ");
+  const aTA = aSplit[0];
+  const bTA = bSplit[0];
+  if (aTA > bTA) { // attempt to first sort by ascending TA name
+    return 1;
+  }
+  else if (aTA < bTA) {
+    return -1;
+  }
+  else { // if TA names the same, sort by ascending grading split #
+    const aSplitNum = parseInt(aSplit[1]);
+    const bSplitNum = parseInt(bSplit[1]);
+    if (aSplitNum > bSplitNum) {
+      return 1;
+    }
+    else if (aSplitNum < bSplitNum) {
+      return -1;
+    }
+    else {
+      return 0;
+    }
+  }
 };
 
 export default function Page() {
@@ -126,7 +146,6 @@ export default function Page() {
   const [studentIDs, setStudentIDs] = React.useState([]);
   const [studentDict, setStudentDict] = React.useState({});
   const [submissionData, setSubmissionData] = React.useState([]);
-  const [index, setIndex] = React.useState(0);
   const [points, setPoints] = React.useState("");
   const [originalPoints, setOriginalPoints] = React.useState(0);
   const [maxPoints, setMaxPoints] = React.useState(30);
